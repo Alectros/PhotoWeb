@@ -20,7 +20,7 @@ namespace PhotoWEB.Models
         public double GPSlon { get; set; }
         public string CommentUser { get; set; }
         public int AlbumID { get; set; }
-        public int OrderInAlbum { get; set; }
+        public int AlbumQueue { get; set; }
         public byte[] File { get; set; }
     }
 

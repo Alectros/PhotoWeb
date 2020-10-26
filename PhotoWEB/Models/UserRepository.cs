@@ -13,8 +13,11 @@ namespace PhotoWEB.Models
         void Create(User user);
         void Delete(int id);
         User Get(int id);
+        User FindUsername(string username);
+        List<User> FindFio(string Fname, string Sname, string Tname);
+        User FindEmail(string email);
         List<User> GetUsers();
-        void Update(User user);
+        void Update(User user);        
     }
     public class UserRepository : IUserRepository
     {
@@ -23,13 +26,31 @@ namespace PhotoWEB.Models
         {
             connectionString = conn;
         }
-        public List<User> GetUsers()
+        public void Create(User user)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<User>("SELECT * FROM Users").ToList();
+                var sqlQuery = "INSERT INTO Users (Username,Email,FirstName,SecondName,ThirdName,BirthDate,Description,Role)" +
+                               " VALUES(@Username," +
+                                       "@Email," +
+                                       "@FirstName," +
+                                       "@SecondName," +
+                                       "@ThirdName," +
+                                       "@BirthDate," +
+                                       "@Description," +
+                                       "@Role)";
+                db.Execute(sqlQuery, user);
             }
         }
+        public void Delete(int id)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = "DELETE FROM Users WHERE Id = @id";
+                db.Execute(sqlQuery, new { id });
+            }
+        }
+
 
         public User Get(int id)
         {
@@ -39,12 +60,33 @@ namespace PhotoWEB.Models
             }
         }
 
-        public void Create(User user)
+        public User FindUsername(string username)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "INSERT INTO Users (Username) VALUES(@Username)";
-                db.Execute(sqlQuery, user);
+                return db.Query<User>("SELECT * FROM Users WHERE Username = @username",new {username}).FirstOrDefault();
+            }
+        }
+        public List<User> FindFio(string Fname, string Sname, string Tname)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                return db.Query<User>("SELECT * FROM Users WHERE Fname = @Fname AND Sname = @Sname AND Tname = @Tname", new { Fname, Sname, Tname }).ToList();
+            }
+        }
+        public User FindEmail(string email)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                return db.Query<User>("SELECT * FROM Users WHERE Email = @email", new { email }).FirstOrDefault();
+            }
+        }
+
+        public List<User> GetUsers()
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                return db.Query<User>("SELECT * FROM Users").ToList();
             }
         }
 
@@ -65,14 +107,7 @@ namespace PhotoWEB.Models
             }
         }
 
-        public void Delete(int id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "DELETE FROM Users WHERE Id = @id";
-                db.Execute(sqlQuery, new { id });
-            }
-        }
+
     }
 
 }
