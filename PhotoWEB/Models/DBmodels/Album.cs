@@ -9,6 +9,7 @@ namespace PhotoWEB.Models
     {
         public int ID { get; set; }
         public int UserID { get; set; }
+        public String Name { get; set; }
         public string Desription { get; set; }
         public string GUID { get; set; }
     }
