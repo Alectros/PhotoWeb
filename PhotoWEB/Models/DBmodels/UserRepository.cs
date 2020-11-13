@@ -13,11 +13,11 @@ namespace PhotoWEB.Models
         void Create(User user);
         void Delete(int id);
         User Get(int id);
-        User FindUsername(string username);
         List<User> FindFio(string Fname, string Sname, string Tname);
         User FindEmail(string email);
         List<User> GetUsers();
-        void Update(User user);        
+        void Update(User user);
+        bool CheckPasswords(int id,string password);
     }
     public class UserRepository : IUserRepository
     {
@@ -51,7 +51,6 @@ namespace PhotoWEB.Models
             }
         }
 
-
         public User Get(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
@@ -60,13 +59,6 @@ namespace PhotoWEB.Models
             }
         }
 
-        public User FindUsername(string username)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return db.Query<User>("SELECT * FROM Users WHERE Username = @username",new {username}).FirstOrDefault();
-            }
-        }
         public List<User> FindFio(string Fname, string Sname, string Tname)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
@@ -94,8 +86,7 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "UPDATE Users SET Username = @Username," +
-                                                    " Email=@Email," +
+                var sqlQuery = "UPDATE Users SET" + " Email=@Email," +
                                                     "FirstName=@FirstName," +
                                                     "SecondName=@SecondName," +
                                                     "ThirdName=@ThirdName," +
@@ -104,6 +95,15 @@ namespace PhotoWEB.Models
                                                     "Role=@Role" +
                                                     " WHERE Id = @Id";
                 db.Execute(sqlQuery, user);
+            }
+        }
+
+        public bool CheckPasswords(int id, string password)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                IEnumerable<int> sqlQuery = db.Query<int>("SELECT UserID FROM PrivateDatas Where UserID=@id and Password=@password", new { id, password });
+                return sqlQuery.Count() > 0;
             }
         }
 

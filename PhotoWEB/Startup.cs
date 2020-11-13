@@ -59,8 +59,8 @@ namespace PhotoWEB
                 app.UseHsts();
             }
 
-            app.UseDeveloperExceptionPage();    
-
+          //  app.UseDeveloperExceptionPage();
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
