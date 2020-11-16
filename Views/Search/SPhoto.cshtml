@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<head>
+    <title>Photo Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <form class="col-lg-10">
+                <h2>User Search</h2>
+                <p>
+                    <input name="Name" type="text" placeholder="Name" />
+                </p>
+                <p>
+                    <input name="TimeMaking" type="datetime" placeholder="TimeMaking" />
+                </p>
+                <p>
+                    <input name="TimeLoad" type="datetime" placeholder="TimeLoad" />
+                </p>
+                <p>
+                    <input name="PhotoModel" type="text" placeholder="PhotoModel" />
+                </p>
+                <input type="submit">
+            </form>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>
