@@ -32,12 +32,12 @@ namespace PhotoWEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
                 User user = Urepository.FindEmail(model.Email);
                 if (user != null)
                 {
-                    if (Urepository.CheckPasswords(user.ID, model.Password))
+                    if (BCrypt.Net.BCrypt.HashPassword(model.Password,user.salt)==user.Password.Replace(" ",string.Empty))
                     {
+                        
                         return RedirectToAction("Index", "UserPage");
                     }
                     else

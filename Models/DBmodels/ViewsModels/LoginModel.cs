@@ -8,9 +8,9 @@ namespace PhotoWEB.Models.ViewsModels
 {
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email hasn't written")]
         public String Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password hasn't written")]
         public String Password { get; set; }
 
     }

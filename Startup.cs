@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using PhotoWEB.Models.DBmodels;
 using Dapper;
 
@@ -33,7 +34,7 @@ namespace PhotoWEB
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=PhotoWeb;Integrated Security=True";
             services.AddSingleton<IConnectionFactory, MySQLConnectionFactory>(provider =>  new MySQLConnectionFactory(connectionString));
             services.AddMvc();

@@ -27,11 +27,12 @@ CREATE TABLE Users
 (
 	ID INT PRIMARY KEY IDENTITY(1,1),
 	Email NCHAR(100) NOT NULL UNIQUE,
-	Password NCHAR(50) NOT NULL,
+	Password NCHAR(100) NOT NULL,
+	Salt NCHAR(100) NOT NULL,
 	FirstName NCHAR(100),
 	SecondName NCHAR(100), 
 	ThirdName NCHAR(100),
-	BirthDate DATE,
+	BirthDate DATETIME,
 	Description NCHAR(3000),
 	Role NCHAR(5)
 )

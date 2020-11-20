@@ -8,21 +8,22 @@ namespace PhotoWEB.Models.ViewsModels
 {
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email hasn't written")]
         public String Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "FirstName hasn't written")]
         public String FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "SecondName hasn't written")]
         public String SecondName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "ThirdName hasn't written")]
         public String ThirdName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "BirthDate hasn't written")]
         public DateTime BirthDate { get; set; }
         [Required]
         public String Description { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password hasn't written")]
         public String Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please repeat password")]
+        [Compare("Password", ErrorMessage = "Passwords dont compare")]
         public String RepeatPassword { get; set; }
     }
 }

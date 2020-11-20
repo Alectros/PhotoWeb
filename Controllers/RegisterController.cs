@@ -23,10 +23,16 @@ namespace PhotoWEB.Controllers
         [HttpPost]
         public IActionResult Index(RegisterModel model)
         {
-
             if (ModelState.IsValid)
             {
-                User user = new User(model.Email, BCrypt.Net.BCrypt.HashPassword(model.Password), model.FirstName, model.SecondName, model.ThirdName, model.BirthDate, model.Description, "Registered");
+                User sameE = Urepository.FindEmail(model.Email);
+                if (sameE == null)
+                {
+                    string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                    User user = new User(model.Email, BCrypt.Net.BCrypt.HashPassword(model.Password,salt),salt, model.FirstName, model.SecondName, model.ThirdName, model.BirthDate, model.Description, "User");
+                    Urepository.Create(user);
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }

@@ -18,7 +18,7 @@ namespace PhotoWEB.Models
         User FindEmail(string email);
         List<User> GetUsers();
         void Update(User user);
-        bool CheckPasswords(int id,string password);
+        bool CheckPasswords(string email, string password);
     }
     public class UserRepository : IUserRepository
     {
@@ -31,9 +31,10 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create()) 
             {
-                var sqlQuery = "INSERT INTO Users (Username,Email,FirstName,SecondName,ThirdName,BirthDate,Description,Role)" +
-                               " VALUES(@Username," +
-                                       "@Email," +
+                var sqlQuery = "INSERT INTO Users (Email,Password,Salt,FirstName,SecondName,ThirdName,BirthDate,Description,Role)" +
+                               " VALUES(@Email," +
+                                       "@Password," +
+                                       "@salt," +
                                        "@FirstName," +
                                        "@SecondName," +
                                        "@ThirdName," +
@@ -99,11 +100,11 @@ namespace PhotoWEB.Models
             }
         }
 
-        public bool CheckPasswords(int id, string password)
+        public bool CheckPasswords(string email, string password)
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                IEnumerable<int> sqlQuery = db.Query<int>("SELECT UserID FROM PrivateDatas Where UserID=@id and Password=@password", new { id, password });
+                IEnumerable<int> sqlQuery = db.Query<int>("SELECT ID FROM Users  Where Email=@email and Password=@password", new { email, password });
                 return sqlQuery.Count() > 0;
             }
         }
