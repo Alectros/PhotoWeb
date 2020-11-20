@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoWEB.Models;
+using PhotoWEB.Models.DBmodels;
 using Dapper;
 
 
@@ -35,11 +35,7 @@ namespace PhotoWEB
             });
 
             string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=PhotoWeb;Integrated Security=True";
-            services.AddTransient<IUserRepository, UserRepository>(provider => new UserRepository(connectionString));
-            services.AddTransient<IAlbumRepository, AlbumRepository>(provider => new AlbumRepository(connectionString));
-            services.AddTransient<IPhotoRepository, PhotoRepository>(provider => new PhotoRepository(connectionString));
-            services.AddTransient<ICommentRepository, CommentRepository>(provider => new CommentRepository(connectionString));
-            services.AddTransient<IPrivateDataRepository, PrivateDataRepository>(provider => new PrivateDataRepository(connectionString));
+            services.AddSingleton<IConnectionFactory, MySQLConnectionFactory>(provider =>  new MySQLConnectionFactory(connectionString));
             services.AddMvc();
 
 

@@ -12,7 +12,6 @@ namespace PhotoWEB.Models.ViewsModels
         public String Email { get; set; }
         [Required]
         public String Password { get; set; }
-        public bool result { get; set; }
 
     }
 }

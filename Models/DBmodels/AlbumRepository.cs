@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoWEB.Models.DBmodels;
+
 
 namespace PhotoWEB.Models
 {
@@ -21,14 +23,14 @@ namespace PhotoWEB.Models
     }
     public class AlbumRepository : IAlbumRepository
     {
-        private string connectionString = null;
-        public AlbumRepository(string conn)
+        private readonly IConnectionFactory connectionFactory;
+        public AlbumRepository(IConnectionFactory _connectionFactory)
         {
-            connectionString = conn;
+            this.connectionFactory = _connectionFactory;
         }
         public void Create(Album album)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "INSERT INTO Albums (UserID,Desription,GUID) " +
                                "VALUES(@UserID," +
@@ -39,7 +41,7 @@ namespace PhotoWEB.Models
         }
         public void Delete(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "DELETE FROM Albums WHERE Id = @id";
                 db.Execute(sqlQuery, new { id });
@@ -48,21 +50,21 @@ namespace PhotoWEB.Models
 
         public Album Get(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Album>("SELECT * FROM Albums WHERE Id = @id", new { id }).FirstOrDefault();
             }
         }
         public List<Album> FindUserID(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Album>("SELECT * FROM Albums WHERE UserID = @id", new { id }).ToList();
             }
         }
         public List<Album> FindName(string name)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Album>("SELECT * FROM Albums WHERE Name = @name", new { name }).ToList();
             }
@@ -70,7 +72,7 @@ namespace PhotoWEB.Models
 
         public List<Album> GetAlbums()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Album>("SELECT * FROM Albums").ToList();
             }
@@ -78,7 +80,7 @@ namespace PhotoWEB.Models
 
         public void Update(Album album)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Albums SET UserID = @UserID," +
                                                "Desription=@Desription," +
@@ -90,7 +92,7 @@ namespace PhotoWEB.Models
 
         public Album FindGUID(string guid)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Album>("SELECT * FROM Albums WHERE GUID=@guid", new { guid }).FirstOrDefault(); ;
             }

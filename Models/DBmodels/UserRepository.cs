@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoWEB.Models.DBmodels;
 
 namespace PhotoWEB.Models
 {
@@ -21,14 +22,14 @@ namespace PhotoWEB.Models
     }
     public class UserRepository : IUserRepository
     {
-        string connectionString = null;
-        public UserRepository(string conn)
+        private readonly IConnectionFactory connectionFactory;
+        public UserRepository(IConnectionFactory _connectionFactory)
         {
-            connectionString = conn;
+            this.connectionFactory = _connectionFactory;
         }
         public void Create(User user)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create()) 
             {
                 var sqlQuery = "INSERT INTO Users (Username,Email,FirstName,SecondName,ThirdName,BirthDate,Description,Role)" +
                                " VALUES(@Username," +
@@ -44,7 +45,7 @@ namespace PhotoWEB.Models
         }
         public void Delete(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "DELETE FROM Users WHERE Id = @id";
                 db.Execute(sqlQuery, new { id });
@@ -53,7 +54,7 @@ namespace PhotoWEB.Models
 
         public User Get(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<User>("SELECT * FROM Users WHERE Id = @id", new { id }).FirstOrDefault();
             }
@@ -61,14 +62,14 @@ namespace PhotoWEB.Models
 
         public List<User> FindFio(string Fname, string Sname, string Tname)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<User>("SELECT * FROM Users WHERE Fname = @Fname AND Sname = @Sname AND Tname = @Tname", new { Fname, Sname, Tname }).ToList();
             }
         }
         public User FindEmail(string email)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<User>("SELECT * FROM Users WHERE Email = @email", new { email }).FirstOrDefault();
             }
@@ -76,7 +77,7 @@ namespace PhotoWEB.Models
 
         public List<User> GetUsers()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<User>("SELECT * FROM Users").ToList();
             }
@@ -84,7 +85,7 @@ namespace PhotoWEB.Models
 
         public void Update(User user)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Users SET" + " Email=@Email," +
                                                     "FirstName=@FirstName," +
@@ -100,7 +101,7 @@ namespace PhotoWEB.Models
 
         public bool CheckPasswords(int id, string password)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 IEnumerable<int> sqlQuery = db.Query<int>("SELECT UserID FROM PrivateDatas Where UserID=@id and Password=@password", new { id, password });
                 return sqlQuery.Count() > 0;
