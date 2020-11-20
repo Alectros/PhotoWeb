@@ -10,6 +10,7 @@ namespace PhotoWEB.Models
     {
         public int ID { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string ThirdName { get; set; }
@@ -17,14 +18,19 @@ namespace PhotoWEB.Models
         public string Description { get; set; }
         public string Role { get; set; }
 
-        public User(string Email,string Fname,string Sname,string Tname,DateTime birth,string Description,string role)
+        public User()
         {
-            this.Email = Email;
-            this.FirstName = Fname;
-            this.SecondName = Sname;
-            this.ThirdName = Tname;
+        }
+
+        public User(string email, string password, string fname, string sname, string tname, DateTime birth, string description, string role)
+        {
+            this.Email = email;
+            this.Password = password;
+            this.FirstName = fname;
+            this.SecondName = sname;
+            this.ThirdName = tname;
             this.BirthDate = birth;
-            this.Description = Description;
+            this.Description = description;
             this.Role = role;
         }
     }

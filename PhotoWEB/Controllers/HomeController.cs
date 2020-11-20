@@ -9,20 +9,22 @@ using MySql.Data.MySqlClient;
 using BCrypt.Net;
 using BCrypt;
 using PhotoWEB.Models.ViewsModels;
+using PhotoWEB.Models.DBmodels;
+using Microsoft.AspNetCore.Http;
 
 namespace PhotoWEB.Controllers
 {
     public class HomeController : Controller
     {
         IUserRepository Urepository;
-        public HomeController(IUserRepository r)
+        public HomeController(IConnectionFactory r)
         {
-            Urepository= r;
+            Urepository = new UserRepository(r);
         }
         public IActionResult Index()
         {
-            LoginModel model= new LoginModel();
-            model.result = true;
+            IEnumerable<User> list = Urepository.GetUsers();
+            LoginModel model = new LoginModel();
             return View(model);
         }
         [HttpPost]
@@ -35,23 +37,22 @@ namespace PhotoWEB.Controllers
                 if (user != null)
                 {
                     if (Urepository.CheckPasswords(user.ID, model.Password))
+                    {
                         return RedirectToAction("Index", "UserPage");
+                    }
                     else
                     {
                         LoginModel nmodel = new LoginModel();
-                        nmodel.result = false;
                         return View(nmodel);
                     }
                 }
                 else
                 {
                     LoginModel nmodel = new LoginModel();
-                    nmodel.result = false;
                     return View(nmodel);
                 }
             }
             LoginModel nmodel1 = new LoginModel();
-            nmodel1.result = false;
             return View(nmodel1);
         }
         public IActionResult Privacy()

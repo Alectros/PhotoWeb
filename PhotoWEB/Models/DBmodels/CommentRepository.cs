@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using PhotoWEB.Models.DBmodels;
+
 
 namespace PhotoWEB.Models
 {
@@ -21,14 +23,14 @@ namespace PhotoWEB.Models
 
     public class CommentRepository:ICommentRepository
     {
-        private string connectionString = null;
-        public CommentRepository(string conn)
+        private readonly IConnectionFactory connectionFactory;
+        public CommentRepository(IConnectionFactory _connectionFactory)
         {
-            connectionString = conn;
+            this.connectionFactory = _connectionFactory;
         }
         public void Create(Comment comment)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "INSERT INTO Comments (UserID,PhotoID,Text) " +
                                "VALUES(@UserID," +
@@ -39,7 +41,7 @@ namespace PhotoWEB.Models
         }
         public void Delete(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "DELETE FROM Comments WHERE Id = @id";
                 db.Execute(sqlQuery, new { id });
@@ -47,35 +49,35 @@ namespace PhotoWEB.Models
         }
         public Comment Get(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Comment>("SELECT * FROM Comments WHERE Id = @id", new { id }).FirstOrDefault();
             }
         }
         public List<Comment> FindUserID(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Comment>("SELECT * FROM Comments WHERE UserUD = @id", new { id }).ToList();
             }
         }
         public List<Comment> FindPhotoID(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Comment>("SELECT * FROM Comments WHERE PhotoID = @id", new { id }).ToList();
             }
         }
         public List<Comment> GetComments()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Comment>("SELECT * FROM Comments").ToList();
             }
         }
         public void Update(Comment comment)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Comments SET UserID = @UserID," +
                                                 "PhotoID=@PhotoID," +

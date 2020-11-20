@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhotoWEB.Models.ViewsModels;
 using PhotoWEB.Models;
+using PhotoWEB.Models.DBmodels;
 
 namespace PhotoWEB.Controllers
 {
     public class RegisterController : Controller
     {
         IUserRepository Urepository;
-        public RegisterController(IUserRepository r)
+        public RegisterController(IConnectionFactory r)
         {
-            Urepository = r;
+            Urepository = new UserRepository(r);
         }
         public IActionResult Index()
         {
@@ -25,12 +26,8 @@ namespace PhotoWEB.Controllers
 
             if (ModelState.IsValid)
             {
-                User user = new User(model.Email, model.FirstName, model.SecondName, model.ThirdName, model.BirthDate, model.Description, "Registered");
-
+                User user = new User(model.Email, BCrypt.Net.BCrypt.HashPassword(model.Password), model.FirstName, model.SecondName, model.ThirdName, model.BirthDate, model.Description, "Registered");
             }
-
-
-
             return View();
         }
     }
