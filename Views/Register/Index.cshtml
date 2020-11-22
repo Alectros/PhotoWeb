@@ -3,19 +3,19 @@
     ViewData["Title"] = "SignIn";
     Layout = null;
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
 
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/site.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-</head>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
     <title>Sign In</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LoginStyle.css" />
     <link href="signin.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -55,7 +55,29 @@
                 </p>
             </div>
             <div class="col-lg-5">
-
+                <ul class="errors">
+                    <li>
+                        <span asp-validation-for="Email"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="FirstName"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="SecondName"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="ThirdName"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="BirthDate"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="Password"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="RepeatPassword"></span>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>

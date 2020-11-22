@@ -11,6 +11,9 @@ using BCrypt;
 using PhotoWEB.Models.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PhotoWEB.Controllers
 {
@@ -27,8 +30,19 @@ namespace PhotoWEB.Controllers
             LoginModel model = new LoginModel();
             return View(model);
         }
+        private async Task Authenticate(string email)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, email)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
         [HttpPost]
-        public IActionResult Index(LoginModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -37,7 +51,7 @@ namespace PhotoWEB.Controllers
                 {
                     if (BCrypt.Net.BCrypt.HashPassword(model.Password,user.salt)==user.Password.Replace(" ",string.Empty))
                     {
-                        
+                        await Authenticate(model.Email);
                         return RedirectToAction("Index", "UserPage");
                     }
                     else
@@ -55,6 +69,13 @@ namespace PhotoWEB.Controllers
             LoginModel nmodel1 = new LoginModel();
             return View(nmodel1);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult Privacy()
         {
             return View();

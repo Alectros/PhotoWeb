@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/css/site.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/LoginStyle.css"/>
 </head>
 <body>
     <div class="container-fluid" >
@@ -18,7 +19,7 @@
             </div>
             <div class="col-lg-2">
                 <p>
-                    <input type="email" name="Email" placeholder="Email" >
+                    <input type="email" name="Email" placeholder="Email">
                 </p>
                 <p>
                     <input type="password" name="Password" placeholder="Password">
@@ -31,6 +32,14 @@
                 </p>
             </div>
             <div class="col-lg-5">
+                <ul class="errors">
+                    <li>
+                        <span asp-validation-for="Email"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="Password"></span>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>

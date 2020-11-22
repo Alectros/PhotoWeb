@@ -18,7 +18,6 @@ namespace PhotoWEB.Models.ViewsModels
         public String ThirdName { get; set; }
         [Required(ErrorMessage = "BirthDate hasn't written")]
         public DateTime BirthDate { get; set; }
-        [Required]
         public String Description { get; set; }
         [Required(ErrorMessage = "Password hasn't written")]
         public String Password { get; set; }

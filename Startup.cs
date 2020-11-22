@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using PhotoWEB.Models.DBmodels;
 using Dapper;
 
-
 namespace PhotoWEB
 {
     public class Startup
@@ -34,9 +33,15 @@ namespace PhotoWEB
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=PhotoWeb;Integrated Security=True";
             services.AddSingleton<IConnectionFactory, MySQLConnectionFactory>(provider =>  new MySQLConnectionFactory(connectionString));
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => 
+                            {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Index");
+                });
+
             services.AddMvc();
 
 
@@ -55,8 +60,8 @@ namespace PhotoWEB
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
-          //  app.UseDeveloperExceptionPage();
+            app.UseAuthentication();
+                                       
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
