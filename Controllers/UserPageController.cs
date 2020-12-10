@@ -40,10 +40,16 @@ namespace PhotoWEB.Controllers
 
             var albums = Arepository.FindUserID(user.ID);
             int count = 0;
+            model.OpenAlbumsAVAS = new List<int>();
+            model.OpenAlbumsNames = new List<string>();
             foreach(Album album in albums)
             {
                 model.OpenAlbumsNames.Insert(count,album.Name);
-                model.OpenAlbumsAVAS.Insert(count, PHrepository.FindAlbumID(album.ID).First().ID);
+                var albumslist = PHrepository.FindAlbumID(album.ID);
+                if (albumslist.Count > 0) 
+                {
+                    model.OpenAlbumsAVAS.Insert(count, albumslist.First().ID);
+                }
             }
 
             return View(model);

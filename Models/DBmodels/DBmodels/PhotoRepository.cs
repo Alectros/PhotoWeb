@@ -126,19 +126,20 @@ namespace PhotoWEB.Models
                 return db.Query<Photo>("SELECT * FROM Photos").ToList();
             }
         }
-        public int GetLastNumInAlbum(int AlbumID)
+        public int GetLastNumInAlbum(int albumID)
         {
-            int? k = 0;
+
             using (IDbConnection db = connectionFactory.Create())
             {
-                k= db.Query<int>("Select Max(AlbumQueue)" +
-                               "From Photos" +
-                               "Where AlbumID=@AlbumID", new { }).First();
-            }
-            if (k == null)
-                return 0;
-            else
-                return Convert.ToInt32(k);
+                var k = db.Query<int?>("Select max(AlbumQueue) " +
+                               "From Photos " +
+                               "WHERE AlbumID = @albumID", new { albumID });
+                if (k == null)
+                    return 0;
+                else
+                    return Convert.ToInt32(k.First());
+
+            }  
         }
         public void Update(Photo photo)
         {

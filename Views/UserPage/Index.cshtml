@@ -71,7 +71,7 @@
                         <div id="albums" class="col-lg-10">
                             <table>
                                 <tr>
-                                    @if (Model.OpenAlbumsAVAS != null)
+                                    @if (Model.OpenAlbumsAVAS.Count>0)
                                     {
                                         @foreach (int n in Model.OpenAlbumsAVAS)
                                         {
@@ -88,9 +88,9 @@
                                     }
                                 </tr>
                                 <tr>
-                                    @if (Model.OpenAlbumsNames != null)
-                                    { 
-                                    @foreach (int n in Model.OpenImages)
+                                    @if (Model.OpenAlbumsNames.Count > 0)
+                                    {
+                                    @foreach (string n in Model.OpenAlbumsNames)
                                     {
                                         <td>
                                            @n

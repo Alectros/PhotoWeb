@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhotoWEB.Models
+namespace PhotoWEB.Models.DBmodels.ViewsModels
 {
-    public class Album
+    public class AlbumCreateModel
     {
-        public int ID { get; set; }
-        public int UserID { get; set; }
         public String Name { get; set; }
         public string Description { get; set; }
-        public string GUID { get; set; }
     }
 }

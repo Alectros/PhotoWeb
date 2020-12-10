@@ -32,9 +32,10 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                var sqlQuery = "INSERT INTO Albums (UserID,Desription,GUID) " +
+                var sqlQuery = "INSERT INTO Albums (UserID,Name,Description,GUID) " +
                                "VALUES(@UserID," +
-                                      "@Desription," +
+                                      "@Name," +
+                                      "@Description," +
                                       "@GUID)";
                 db.Execute(sqlQuery, album);
             }
