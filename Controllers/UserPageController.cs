@@ -19,11 +19,40 @@ namespace PhotoWEB.Controllers
 {
     public class UserPageController : Controller
     {
+        IUserRepository Urepository;
+        IPhotoRepository PHrepository;
+        IAlbumRepository Arepository;
+        public UserPageController(IConnectionFactory r)
+        {
+            Urepository = new UserRepository(r);
+            PHrepository = new PhotoRepository(r);
+            Arepository = new AlbumRepository(r);
+        }
         [Authorize]
         public IActionResult Index()
         {
             var email = User.Identity.Name;
-            return View();
+            User user = Urepository.FindEmail(email);
+
+            UserPageModel model = new UserPageModel(user);
+
+            model.OpenImages = PHrepository.FindUserPhotosID(user.ID);
+
+            var albums = Arepository.FindUserID(user.ID);
+            int count = 0;
+            foreach(Album album in albums)
+            {
+                model.OpenAlbumsNames.Insert(count,album.Name);
+                model.OpenAlbumsAVAS.Insert(count, PHrepository.FindAlbumID(album.ID).First().ID);
+            }
+
+            return View(model);
+        }
+
+        public FileContentResult GetImage(int id)
+        {
+            byte[] image = PHrepository.Get(id).FilePhoto;
+            return File(image, "image/jpeg");
         }
     }
 }

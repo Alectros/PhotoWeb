@@ -16,12 +16,14 @@ namespace PhotoWEB.Models
         void Delete(int id);
         Photo Get(int id);
         List<Photo> FindUserID(int id);
+        List<int> FindUserPhotosID(int photoid);
         List<Photo> FindAlbumID(int id);
         List<Photo> FindGPS(int gpslat,int gpslon);
         List<Photo> FindTimeCreation(DateTime createtime);
         List<Photo> FindTimeLoad(DateTime loadtime);
         List<Photo> FindName(string name);
         List<Photo> GetPhotos();
+        int GetLastNumInAlbum(int AlbumID);
         void Update(Photo photo);
         Photo FindGUID(string guid);
     }
@@ -37,8 +39,9 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                var sqlQuery = "INSERT INTO Photos (Name,TimeMaking,TimeLoad,Model,GUID,GPSlat,GPSlon,CommentUser,AlbumID,AlbumQueue,File) " +
+                var sqlQuery = "INSERT INTO Photos (Name,UserID,TimeMaking,TimeLoad,Model,GUID,GPSlat,GPSlon,CommentUser,AlbumID,AlbumQueue,FilePhoto) " +
                                "VALUES(@Name," +
+                                      "@UserID," +
                                       "@TimeMaking," +
                                       "@TimeLoad," +
                                       "@Model," +
@@ -48,7 +51,7 @@ namespace PhotoWEB.Models
                                       "@CommentUser," +
                                       "@AlbumID," +
                                       "@AlbumQueue," +
-                                      "@File)";
+                                      "@FilePhoto)";
                 db.Execute(sqlQuery, photo);
             }
         }
@@ -64,7 +67,7 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<Photo>("SELECT * FROM Photos WHERE Id = @id", new { id }).FirstOrDefault();
+                return db.Query<Photo>("SELECT * FROM Photos WHERE ID = @id", new { id }).FirstOrDefault();
             }
         }
         public List<Photo> FindUserID(int id)
@@ -72,6 +75,13 @@ namespace PhotoWEB.Models
             using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<Photo>("SELECT * FROM Photos WHERE UserID = @id", new { id }).ToList();
+            }
+        }
+        public List<int> FindUserPhotosID(int photoid)
+        {
+            using (IDbConnection db = connectionFactory.Create())
+            {
+                return db.Query<int>("SELECT ID FROM Photos WHERE UserID = @photoid", new { photoid }).ToList();
             }
         }
         public List<Photo> FindAlbumID(int id)
@@ -116,11 +126,26 @@ namespace PhotoWEB.Models
                 return db.Query<Photo>("SELECT * FROM Photos").ToList();
             }
         }
+        public int GetLastNumInAlbum(int AlbumID)
+        {
+            int? k = 0;
+            using (IDbConnection db = connectionFactory.Create())
+            {
+                k= db.Query<int>("Select Max(AlbumQueue)" +
+                               "From Photos" +
+                               "Where AlbumID=@AlbumID", new { }).First();
+            }
+            if (k == null)
+                return 0;
+            else
+                return Convert.ToInt32(k);
+        }
         public void Update(Photo photo)
         {
             using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Photos SET Name = @Name," +
+                                                    "UserID=@UserID" +
                                                     "TimeMaking=@TimeMaking," +
                                                     "TimeLoad=@TimeLoad, " +
                                                     "Model=@Model," +
@@ -130,7 +155,7 @@ namespace PhotoWEB.Models
                                                     "CommentUser=@CommentUser," +
                                                     "AlbumID=@AlbumID," +
                                                     "AlbumQueue=@AlbumQueue," +
-                                                    "File=@File " +
+                                                    "FilePhoto=@FilePhoto " +
                                                     "WHERE Id = @Id";
                 db.Execute(sqlQuery, photo);
             }

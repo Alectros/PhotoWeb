@@ -16,12 +16,13 @@ namespace PhotoWEB.Models
         public DateTime TimeLoad { get; set; }
         public string Model { get; set; }
         public string GUID { get; set; }
-        public double GPSlat { get; set; }
-        public double GPSlon { get; set; }
+        public double? GPSlat { get; set; }
+        public double? GPSlon { get; set; }
         public string CommentUser { get; set; }
-        public int AlbumID { get; set; }
+        public int UserID { get; set; }
+        public int? AlbumID { get; set; }
         public int AlbumQueue { get; set; }
-        public byte[] File { get; set; }
+        public byte[] FilePhoto { get; set; }
     }
 
 }

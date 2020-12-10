@@ -1,0 +1,63 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.PhotoLoadModel
+
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <title>Sign In</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LoginStyle.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <form class="row" enctype="multipart/form-data" method="post">
+            <div class="col-lg-5">
+
+            </div>
+            <div class="col-lg-2">
+                <h2>Load Image</h2>
+                <p>
+                    <input type="text" name="Name" placeholder="Name" />
+                </p>
+                <p>
+                    <input type="date" name="TimeMaking" placeholder="Creating data" />
+                </p>
+                <p>
+                    <input type="text" name="CameraModel" placeholder="Camera model" />
+                </p>
+                <p>
+                    <input type="number" name="GPSlat" placeholder="GPS lat" />
+                </p>         
+                <p>
+                    <input type="number" name="GPSlon" placeholder="GPS lon" />
+                </p>
+                <p>
+                    <textarea name="Comment" placeholder="Comment"></textarea>
+                </p>
+                <p>
+                    <input type="text" name="AlbumName" placeholder="Album" />
+                </p>
+                <p>
+                    <input type="file" name="Image" placeholder="Image" />
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-danger">
+                </p>
+            </div>
+            <div class="col-lg-5">
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

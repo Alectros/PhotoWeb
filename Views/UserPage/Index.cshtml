@@ -1,4 +1,4 @@
-﻿
+﻿@model PhotoWEB.Models.ViewsModels.UserPageModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -25,7 +25,7 @@
             <div id="mainframe" class="col-lg-10">
                 <p>
                     <h2>
-                        Model.FirstName Model.SecondName Model.ThirdName
+                        @Model.FirstName @Model.SecondName @Model.ThirdName
                     </h2>
                 </p>
                 <div class="row">
@@ -34,7 +34,7 @@
 
                         </div>
                         <div class="col-lg-10 h4">
-                            Description
+                            @Model.Description
                         </div>
                         <div class="col-lg-1">
 
@@ -46,12 +46,21 @@
                         <div id="photos" class="col-lg-10">
                             <table>
                                 <tr>
-                                    <td>
-                                        <img class="img_icon" src="~/images/1.png">
-                                    </td>
-                                    <td>
-                                        <img class="img_icon" src="~/images/2.png">
-                                    </td>
+                                    @if (Model.OpenImages != null)
+                                    {
+                                        @foreach (int n in Model.OpenImages)
+                                        {
+                                            <td>
+                                                <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                            </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <img class="img_icon">
+                                        </td>
+                                    }
                                 </tr>
                             </table>
                         </div>
@@ -62,12 +71,33 @@
                         <div id="albums" class="col-lg-10">
                             <table>
                                 <tr>
-                                    <td>
-                                        <img class="album_icon" src="~/images/3.png">
-                                    </td>
-                                    <td>
-                                        <img class="album_icon" src="~/images/4.png">
-                                    </td>
+                                    @if (Model.OpenAlbumsAVAS != null)
+                                    {
+                                        @foreach (int n in Model.OpenAlbumsAVAS)
+                                        {
+                                            <td>
+                                                <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                            </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <img class="img_icon">
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    @if (Model.OpenAlbumsNames != null)
+                                    { 
+                                    @foreach (int n in Model.OpenImages)
+                                    {
+                                        <td>
+                                           @n
+                                        </td>
+                                    }
+                                    }
+
                                 </tr>
                             </table>
                         </div>
