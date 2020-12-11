@@ -16,7 +16,7 @@ namespace PhotoWEB.Models
         void Delete(int id);
         Photo Get(int id);
         List<Photo> FindUserID(int id);
-        List<int> FindUserPhotosID(int photoid);
+        List<int> FindUserPhotosID(int userid);
         List<Photo> FindAlbumID(int id);
         List<Photo> FindGPS(int gpslat,int gpslon);
         List<Photo> FindTimeCreation(DateTime createtime);
@@ -77,11 +77,11 @@ namespace PhotoWEB.Models
                 return db.Query<Photo>("SELECT * FROM Photos WHERE UserID = @id", new { id }).ToList();
             }
         }
-        public List<int> FindUserPhotosID(int photoid)
+        public List<int> FindUserPhotosID(int userid)
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<int>("SELECT ID FROM Photos WHERE UserID = @photoid", new { photoid }).ToList();
+                return db.Query<int>("SELECT ID FROM Photos WHERE UserID = @userid", new { userid }).ToList();
             }
         }
         public List<Photo> FindAlbumID(int id)

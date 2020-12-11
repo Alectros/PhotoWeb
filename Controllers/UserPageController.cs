@@ -50,6 +50,10 @@ namespace PhotoWEB.Controllers
                 {
                     model.OpenAlbumsAVAS.Insert(count, albumslist.First().ID);
                 }
+                else
+                {
+                    model.OpenAlbumsAVAS.Insert(count, -1);
+                }
             }
 
             return View(model);

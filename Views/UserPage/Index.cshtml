@@ -46,9 +46,9 @@
                         <div id="photos" class="col-lg-10">
                             <table>
                                 <tr>
-                                    @if (Model.OpenImages != null)
+                                    @if (Model.OpenImages.Count() > 0) 
                                     {
-                                        @foreach (int n in Model.OpenImages)
+                                        @foreach (int n in Model.OpenImages.Take(4))
                                         {
                                             <td>
                                                 <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
@@ -58,7 +58,7 @@
                                     else
                                     {
                                         <td>
-                                            <img class="img_icon">
+                                            <img class="img_icon" src="~/images/empty.jpg">
                                         </td>
                                     }
                                 </tr>
@@ -71,19 +71,28 @@
                         <div id="albums" class="col-lg-10">
                             <table>
                                 <tr>
-                                    @if (Model.OpenAlbumsAVAS.Count>0)
+                                    @if (Model.OpenAlbumsAVAS.Count > 0)
                                     {
                                         @foreach (int n in Model.OpenAlbumsAVAS)
                                         {
-                                            <td>
-                                                <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
-                                            </td>
+                                            if (n != -1)
+                                            {
+                                                <td>
+                                                    <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <img class="img_icon" src="~/images/empty.jpg">
+                                                </td>
+                                            }
                                         }
                                     }
                                     else
                                     {
                                         <td>
-                                            <img class="img_icon">
+                                            <img class="img_icon" src="~/images/empty.jpg">
                                         </td>
                                     }
                                 </tr>
