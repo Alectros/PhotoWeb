@@ -1,0 +1,30 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.PhotoViewModel;
+@{
+    ViewData["Title"] = "Photos";
+    Layout = null;
+}
+
+<head>
+    <title>Photo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+    <link href="~/css/PhotoView.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
+                <img class="img_full" src="@Url.Action("GetImage", "UserPage", new { id = Model.PhotoID })">
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+
+</body>

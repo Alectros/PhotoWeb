@@ -17,6 +17,7 @@ namespace PhotoWEB.Models
         Photo Get(int id);
         List<Photo> FindUserID(int id);
         List<int> FindUserPhotosID(int userid);
+        List<int> FindAlbumPhotosID(int albumid);
         List<Photo> FindAlbumID(int id);
         List<Photo> FindGPS(int gpslat,int gpslon);
         List<Photo> FindTimeCreation(DateTime createtime);
@@ -82,6 +83,14 @@ namespace PhotoWEB.Models
             using (IDbConnection db = connectionFactory.Create())
             {
                 return db.Query<int>("SELECT ID FROM Photos WHERE UserID = @userid", new { userid }).ToList();
+            }
+        }
+
+        public List<int> FindAlbumPhotosID(int albumid)
+        {
+            using (IDbConnection db = connectionFactory.Create())
+            {
+                return db.Query<int>("SELECT ID FROM Photos WHERE AlbumID = @albumid", new { albumid }).ToList();
             }
         }
         public List<Photo> FindAlbumID(int id)

@@ -1,0 +1,68 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.AlbumListModel;
+@{
+    ViewData["Title"] = "Albums";
+    Layout = null;
+}
+
+<head>
+    <title>Albums</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <h2>Album List</h2>
+                <table>
+
+                    @for (int i = 0; i < Model.AlbumAVAID.Count(); i++)
+                    {
+                    <tr>
+                        @foreach (int iD in Model.AlbumAVAID.Skip(i * 4).Take(4))
+                        {
+                            if (iD != -1)
+                            {
+                                <td>
+                                    <a>
+                                        <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = iD })">
+                                    </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a>
+                                        <img class="img_icon" src="~/images/empty.jpg">
+                                    </a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                        <tr>
+                            @foreach (string name in Model.AlbumName.Skip(i * 4).Take(4))
+                            {
+                            <td>
+                                <a href="@Url.Action("Index","AlbumPhotosList",new { Aname= name })">
+                                    @name
+                                </a>
+                            </td>
+                            }
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>

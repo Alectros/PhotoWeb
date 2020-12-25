@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>
@@ -43,14 +43,15 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-1"></div>
-                        <div id="photos" class="col-lg-10">
+                    <div id="photos" class="col-lg-10">
+                        <a href="@Url.Action("Index","PhotoList")">
                             <table>
                                 <tr>
-                                    @if (Model.OpenImages.Count() > 0) 
+                                    @if (Model.OpenImages.Count() > 0)
                                     {
                                         @foreach (int n in Model.OpenImages.Take(4))
                                         {
-                                            <td>
+                                            <td>                                               
                                                 <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
                                             </td>
                                         }
@@ -63,12 +64,14 @@
                                     }
                                 </tr>
                             </table>
-                        </div>
+                        </a>
+                    </div>
                     <div class="col-lg-1"></div>
                 </div>
                 <div class="row">
                     <div class="col-lg-1"></div>
-                        <div id="albums" class="col-lg-10">
+                    <div id="albums" class="col-lg-10">
+                        <a href="@Url.Action("Index","AlbumList")">
                             <table>
                                 <tr>
                                     @if (Model.OpenAlbumsAVAS.Count > 0)
@@ -99,17 +102,18 @@
                                 <tr>
                                     @if (Model.OpenAlbumsNames.Count > 0)
                                     {
-                                    @foreach (string n in Model.OpenAlbumsNames)
-                                    {
-                                        <td>
-                                           @n
-                                        </td>
-                                    }
+                                        @foreach (string n in Model.OpenAlbumsNames)
+                                        {
+                                            <td>
+                                                @n
+                                            </td>
+                                        }
                                     }
 
                                 </tr>
                             </table>
-                        </div>
+                        </a>
+                    </div>
                     <div class="col-lg-1"></div>
                 </div>
             </div>
