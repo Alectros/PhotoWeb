@@ -42,6 +42,21 @@
                 </table>
             </div>
             <div class="col-lg-3">
+                <p class="button_area">
+                    <button onclick="window.location.href = '@Url.Action("Delete",new { Model.AlbumID})';">Delete</button>
+                </p>
+                @if (Model.GUID == null || Model.GUID == "")
+                {
+                    <p class="button_area">
+                        <button onclick="window.location.href = '@Url.Action("SetGUID", new { Model.AlbumID })';">Share</button>
+                    </p>
+                }
+                else
+                {
+                    <p class="button_area">
+                        <input type="text" readonly="readonly" style="width: 400px" value="@Context.Request.Host/GUID/SAlbum?Guid=@Model.GUID" />
+                    </p>
+                }
                 <h2>Description</h2>
                 <p id="description">@Model.Description</p>
             </div>

@@ -36,7 +36,7 @@
                 else
                 {
                     <p class="button_area">
-                        @Context.Request.Host@Context.Request.Path/GUID/@Model.GUID
+                        <input type="text" readonly="readonly" style="width: 400px" value="@Context.Request.Host/GUID/SPhoto?Guid=@Model.GUID"/>
                     </p>
                 }
                     <div class="comment_box">

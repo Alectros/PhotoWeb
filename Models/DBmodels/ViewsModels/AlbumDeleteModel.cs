@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace PhotoWEB.Models.DBmodels.ViewsModels
 {
-    public class AlbumPhotosListModel
+    public class AlbumDeleteModel
     {
-        public IEnumerable<int> PhotoID { get; set; }
-        public String Description { get; set; }
+        public string DeletePhotos { get; set; }
         public int AlbumID { get; set; }
-        public string GUID { get; set; }
-
     }
 }

@@ -15,7 +15,6 @@ namespace PhotoWEB.Controllers
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
         ICommentRepository Crepository;
-        private char[] alf = new char[10] { 'c', 'a', '2', '3', 'b', '5' ,'6','d','8','9'}; 
         public PhotoViewController(IConnectionFactory r)
         {
             Urepository = new UserRepository(r);
@@ -32,8 +31,16 @@ namespace PhotoWEB.Controllers
             {
                 CommentStruct t = new CommentStruct();
                 t.Comment = comm.Text;
-                User user = Urepository.Get(comm.UserID);
-                t.name = user.FirstName + ' ' + user.SecondName + ' ' + user.ThirdName;
+                if (comm.UserID != null)
+                {
+                    User user = Urepository.Get(Convert.ToInt32(comm.UserID));
+                    t.name = user.FirstName + ' ' + user.SecondName + ' ' + user.ThirdName;
+                }
+                else
+                {
+                    t.name = "Guest";
+                }
+                
                 model.Comments.Add(t);
             }
 
@@ -57,6 +64,19 @@ namespace PhotoWEB.Controllers
 
             return RedirectToAction("Index", "PhotoView", new { photoID = model.PhotoID });
         }
+        public IActionResult Delete(int photoID)
+        {
+            Photo photo = PHrepository.Get(photoID);
+            PHrepository.Delete(photo.ID);
+            if (photo.AlbumID != null)
+            {
+                return RedirectToAction("Index", "AlbumPhotosList", new { Arepository.Get(Convert.ToInt32(photo.AlbumID)).Name });
+            }
+            else
+            {
+                return RedirectToAction("Index", "PhotoView");
+            }
+        }
 
         public IActionResult SetGUID (int photoID)
         {
@@ -69,24 +89,11 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "PhotoView",new { photoID= photo.ID });
         }
 
-        public IActionResult Delete(int photoID)
-        {
-            Photo photo = PHrepository.Get(photoID);
-            PHrepository.Delete(photo.ID);
-            if (photo.AlbumID != null)
-            {
-                return RedirectToAction("Index","AlbumPhotosList", new { Arepository.Get(Convert.ToInt32( photo.AlbumID)).Name });
-            }
-            else
-            {
-                return RedirectToAction("Index","PhotoView");
-            }
-        }
 
-        private string GenGuid(int k)
+        public static string GenGuid(int k)
         {
             string guid = "";
-
+            char[] alf = new char[10] { 'c', 'a', '2', '3', 'b', '5', '6', 'd', '8', '9' }; 
             for (int i = 0; i < 25; i++)
             {
                 guid += alf[k % 10];

@@ -84,7 +84,7 @@ namespace PhotoWEB.Models
             using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Albums SET UserID = @UserID," +
-                                               "Desription=@Desription," +
+                                               "Description=@Description," +
                                                "GUID=@GUID " +
                                                "WHERE Id = @Id";
                 db.Execute(sqlQuery, album);
