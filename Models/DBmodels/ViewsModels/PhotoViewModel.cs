@@ -15,6 +15,8 @@ namespace PhotoWEB.Models.DBmodels.ViewsModels
     {
         public int PhotoID { get; set; }
         public List<CommentStruct> Comments { get; set; }
+        public string GUID { get; set; }
+        public string user_comment { get; set; }
 
     }
 }

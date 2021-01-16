@@ -30,7 +30,9 @@
                             {
                                 <td>
                                     <a href="@Url.Action("Index","PhotoView",new { photoID=iD })">
-                                        <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = iD })">
+                                        <div class="img_div">
+                                            <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = iD })">
+                                        </div>
                                     </a>
                                 </td>
                             }

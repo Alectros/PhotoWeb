@@ -23,7 +23,56 @@
             <div class="col-lg-8">
                 <img class="img_full" src="@Url.Action("GetImage", "UserPage", new { id = Model.PhotoID })">
             </div>
-            <div class="col-lg-3"></div>
+            <div class="col-lg-3">
+                <p class="button_area">
+                    <button onclick="window.location.href = '@Url.Action("Delete",new { Model.PhotoID})';">Delete</button>
+                </p>
+                @if (Model.GUID == null || Model.GUID == "")
+                {
+                    <p class="button_area">
+                        <button onclick="window.location.href = '@Url.Action("SetGUID", new { Model.PhotoID })';">Share</button>
+                    </p>
+                }
+                else
+                {
+                    <p class="button_area">
+                        @Context.Request.Host@Context.Request.Path/GUID/@Model.GUID
+                    </p>
+                }
+                    <div class="comment_box">
+
+                        @foreach (var t in Model.Comments)
+                        {
+
+                            <div class="comment_area">
+                                <p>
+                                    <h4>
+                                        <strong>
+                                            @t.name
+                                        </strong>
+                                    </h4>
+                                </p>
+                                <p>
+                                    @t.Comment
+                                </p>
+                            </div>
+                        }
+                    </div>
+                
+                    <div>
+                        <h4><p>Write a comment</p></h4>
+                        <form method="post" action="PhotoView/CommitComment">
+                            <input type="hidden" name="PhotoID" value="@Model.PhotoID" />
+                            <p>
+                                <textarea type="text" name="user_comment" style="resize: none;"> </textarea>
+                            </p>
+                            <p>
+                                <button onclick="window.location.href = '@Url.Action("CommitComment", new { Model.PhotoID })';">Load</button>
+                            </p>
+                        </form>
+                    </div>
+                
+            </div>
         </div>
     </div>
 

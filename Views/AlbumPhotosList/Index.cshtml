@@ -28,11 +28,13 @@
                         <tr>
                             @foreach (int iD in Model.PhotoID.Skip(i * 3).Take(3))
                             {
-                                <td>
+                            <td>
+                                <div class="img_div">
                                     <a href="@Url.Action("Index","PhotoView",new { photoID=iD })">
                                         <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = iD })">
                                     </a>
-                                </td>
+                                </div>
+                            </td>
                             }
                         </tr>
                     }

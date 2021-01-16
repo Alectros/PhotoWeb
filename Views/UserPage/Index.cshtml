@@ -51,16 +51,20 @@
                                     {
                                         @foreach (int n in Model.OpenImages.Take(4))
                                         {
-                                            <td>                                               
-                                                <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                            <td>
+                                                <div class="img_div">
+                                                    <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                                </div>
                                             </td>
                                         }
                                     }
                                     else
                                     {
-                                        <td>
-                                            <img class="img_icon" src="~/images/empty.jpg">
-                                        </td>
+                                            <td>
+                                                <div class="img_div">
+                                                    <img class="img_icon" src="~/images/empty.jpg">
+                                                </div>
+                                            </td>
                                     }
                                 </tr>
                             </table>
@@ -80,23 +84,29 @@
                                         {
                                             if (n != -1)
                                             {
-                                                <td>
+                                            <td>
+                                                <div class="img_div">
                                                     <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
-                                                </td>
+                                                </div>
+                                            </td>
                                             }
                                             else
                                             {
-                                                <td>
+                                            <td>
+                                                <div class="img_div">
                                                     <img class="img_icon" src="~/images/empty.jpg">
-                                                </td>
+                                                </div>
+                                            </td>
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        <td>
-                                            <img class="img_icon" src="~/images/empty.jpg">
-                                        </td>
+                                            <td>
+                                                <div class="img_div">
+                                                    <img class="img_icon" src="~/images/empty.jpg">
+                                                </div>
+                                            </td>
                                     }
                                 </tr>
                                 <tr>

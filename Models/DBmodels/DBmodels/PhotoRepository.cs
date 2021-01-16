@@ -155,7 +155,7 @@ namespace PhotoWEB.Models
             using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Photos SET Name = @Name," +
-                                                    "UserID=@UserID" +
+                                                    "UserID=@UserID," +
                                                     "TimeMaking=@TimeMaking," +
                                                     "TimeLoad=@TimeLoad, " +
                                                     "Model=@Model," +

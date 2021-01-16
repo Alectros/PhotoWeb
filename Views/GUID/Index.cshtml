@@ -1,4 +1,4 @@
-﻿
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.GUIDIndexModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -18,16 +18,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <form class="col-lg-10">
+            <form class="col-lg-10" method="post">
                 <h2>Enter GUID</h2>
                 <p>
                     <input name="Guid" type="text" />
                 </p>
                 <p>
-                    <input name="GuidType" type="radio" value="Photo" /> Photo
-                </p>
-                <p>
-                    <input name="GuidType" type="radio" value="Album" /> Album
+                    <select name="GuidType" type="radio" value="Photo"> 
+                        <option value="Photo">Photo</option>
+                        <option value="Album">Album</option>
+                    </select>
                 </p>
                 <input type="submit">
             </form>
