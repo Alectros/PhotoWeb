@@ -1,4 +1,4 @@
-﻿
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchUserModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -18,28 +18,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <form class="col-lg-10">
-                <h2>User Search</h2>
-                <p>
-                    <input name="Email" type="text" placeholder="Email" />
-                </p>
-                <p>
-                    <input name="FirstName" type="text" placeholder="FirstName" />
-                </p>
-                <p>
-                    <input name="SecondName" type="text" placeholder="SecondName" />
-                </p>
-                <p>
-                    <input name="ThirdName" type="text" placeholder="ThirdName" />
-                </p>
-                <p>
-                    <input name="DateBirth" type="datetime" placeholder="DateBirth" />
-                </p>
-                <p>
-                    <input name="Description" type="text" placeholder="Description" />
-                </p>
-                <input type="submit">
-            </form>
+            <div class="col-lg-10">
+                <h4>Users</h4>
+                @foreach(var U in Model.Users)
+                {
+                    <p>
+                        <a href="@Url.Action("UserPage",new {id=U.ID })">
+                            @U.name;
+                        </a>
+                    </p>
+                }
+            </div>
             <div class="col-lg-1"></div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-﻿
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchAlbumModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -18,13 +18,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <form class="col-lg-10">
-                <h2>User Search</h2>
-                <p>
-                    <input name="Name" type="text" placeholder="Name" />
-                </p>
-                <input type="submit">
-            </form>
+            <div class="col-lg-10">
+                @foreach (var A in Model.albums)
+                {
+                    <p>
+                        <a href="@Url.Action("Index","AlbumPhotosList",new { Aname=A.Name })">
+                            @A.Name        @A.User                       
+                        </a>
+                    </p>
+                }
+            </div>
             <div class="col-lg-1"></div>
         </div>
     </div>

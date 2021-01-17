@@ -125,7 +125,7 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<Photo>("SELECT * FROM Photos WHERE Id = @id", new { name }).ToList();
+                return db.Query<Photo>("SELECT * FROM Photos WHERE Name = @name", new { name }).ToList();
             }
         }
         public List<Photo> GetPhotos()

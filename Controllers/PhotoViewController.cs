@@ -74,7 +74,7 @@ namespace PhotoWEB.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "PhotoView");
+                return RedirectToAction("Index", "PhotoList");
             }
         }
 

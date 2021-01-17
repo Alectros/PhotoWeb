@@ -17,6 +17,7 @@ namespace PhotoWEB.Models.ViewsModels
         public IEnumerable<int> OpenImages { get; set; }
         public List<string> OpenAlbumsNames { get; set; }
         public List<int> OpenAlbumsAVAS { get; set; }
+        public int ID { get; set; }
 
         public UserPageModel()
         {

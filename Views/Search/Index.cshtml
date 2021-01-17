@@ -18,18 +18,22 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <div class="col-lg-10">
+            <form class="col-lg-10" method="post">
                 <h2>Search</h2>
                 <p>
-                    <a> User </a>
+                    <input type="text" name="searchField"/>
                 </p>
                 <p>
-                    <a> Photo </a>
+                    <select name="type">
+                        <option value="User" selected>User</option>
+                        <option value="Photo">Photo</option>
+                        <option value="Album">Album</option>
+                    </select>
                 </p>
                 <p>
-                    <a> Album </a>
+                    <input type="submit" />
                 </p>
-            </div>
+            </form>
             <div class="col-lg-1"></div>
         </div>
     </div>

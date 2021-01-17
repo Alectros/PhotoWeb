@@ -1,4 +1,4 @@
-﻿
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchPhotoModel
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -12,28 +12,24 @@
     <link rel="stylesheet" href="~/css/site.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-1"></div>
-            <form class="col-lg-10">
-                <h2>User Search</h2>
-                <p>
-                    <input name="Name" type="text" placeholder="Name" />
-                </p>
-                <p>
-                    <input name="TimeMaking" type="datetime" placeholder="TimeMaking" />
-                </p>
-                <p>
-                    <input name="TimeLoad" type="datetime" placeholder="TimeLoad" />
-                </p>
-                <p>
-                    <input name="PhotoModel" type="text" placeholder="PhotoModel" />
-                </p>
-                <input type="submit">
-            </form>
+            <div class="col-lg-10">
+                @foreach(var P in Model.photos)
+                {
+                    <p>
+                        <a href="@Url.Action("Index","PhotoView",new {photoID=P.ID })">
+                            <img class="img_small_icon" src="@Url.Action("GetImage", "UserPage", new { id = P.ID })">
+                            @P.Name      @P.User
+                        </a>
+                    </p>
+                }
+            </div>
             <div class="col-lg-1"></div>
         </div>
     </div>

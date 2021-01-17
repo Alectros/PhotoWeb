@@ -61,11 +61,11 @@ namespace PhotoWEB.Models
             }
         }
 
-        public List<User> FindFio(string Fname, string Sname, string Tname)
+        public List<User> FindFio(string FirstName, string SecondName, string ThirdName)
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<User>("SELECT * FROM Users WHERE Fname = @Fname AND Sname = @Sname AND Tname = @Tname", new { Fname, Sname, Tname }).ToList();
+                return db.Query<User>("SELECT * FROM Users WHERE FirstName = @FirstName OR SecondName = @SecondName OR ThirdName = @ThirdName", new { FirstName, SecondName, ThirdName }).ToList();
             }
         }
         public User FindEmail(string email)
