@@ -1,7 +1,7 @@
 ﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchPhotoModel
 @{
     ViewData["Title"] = "Index";
-    Layout = null;
+    Layout = "_Layout";
 }
 
 <head>
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
-                @foreach(var P in Model.photos)
+                @foreach (var P in Model.photos)
                 {
                     <p>
                         <a href="@Url.Action("Index","PhotoView",new {photoID=P.ID })">

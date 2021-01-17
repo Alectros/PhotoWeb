@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Load photo";
-    Layout = null;
+    Layout = "_Layout";
 }
 
 
@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/LoginStyle.css" />
+
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid">
@@ -45,7 +47,13 @@
                     <textarea name="Comment" placeholder="Comment" style="resize: none;"></textarea>
                 </p>
                 <p>
-                    <input type="text" name="AlbumName" placeholder="Album" />
+                    <select name="AlbumName">
+                        <option value="" selected>No album</option>
+                        @foreach (string album in Model.AlbumsNames)
+                        {
+                            <option value="@album">@album</option>
+                        }
+                    </select>
                 </p>
                 <p>
                     <input type="file" name="Image" placeholder="Image" />

@@ -24,7 +24,15 @@ namespace PhotoWEB.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            PhotoLoadModel model = new PhotoLoadModel();
+            model.AlbumsNames = new List<string>();
+
+            var albums = Arepository.GetAlbums();
+            foreach(Album A in albums)
+            {
+                model.AlbumsNames.Add(A.Name);
+            }
+            return View(model);
         }
         [HttpPost]
         public IActionResult Index(PhotoLoadModel model)
@@ -73,7 +81,7 @@ namespace PhotoWEB.Controllers
 
                 PHrepository.Create(photo);
             }
-            return View();
+            return RedirectToAction("Index");
         }
         public List<string> GetAlbumsNames()
         {

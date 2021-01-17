@@ -1,7 +1,7 @@
 ﻿@model PhotoWEB.Models.DBmodels.ViewsModels.AlbumUpdateModel
 @{
     ViewData["Title"] = "Photos";
-    Layout = null;
+    Layout = "_Layout";
 }
 
 <head>
@@ -22,7 +22,7 @@
         <form class="row" method="post">
             <div class="col-lg-1"></div>
             <div class="col-lg-6 photoQueue" name="Photos">
-                @for(int i=0;i<Model.Photos.Length;i++)
+                @for (int i=0;i<Model.Photos.Length;i++)
                 {
                     <div class="container-fluid">
                         <div class="row comment_area">

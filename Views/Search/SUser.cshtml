@@ -1,7 +1,7 @@
 ﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchUserModel
 @{
     ViewData["Title"] = "Index";
-    Layout = null;
+    Layout = "_Layout";
 }
 
 <head>
@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/css/site.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,7 +22,7 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <h4>Users</h4>
-                @foreach(var U in Model.Users)
+                @foreach (var U in Model.Users)
                 {
                     <p>
                         <a href="@Url.Action("UserPage",new {id=U.ID })">

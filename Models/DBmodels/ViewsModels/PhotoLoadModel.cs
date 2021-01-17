@@ -18,5 +18,8 @@ namespace PhotoWEB.Models.DBmodels.ViewsModels
         public double GPSlon { get; set; }
         public string AlbumName { get; set; }
         public IFormFile Image { get; set; }
+
+
+        public ICollection<string> AlbumsNames { get; set; }
     }
 }
