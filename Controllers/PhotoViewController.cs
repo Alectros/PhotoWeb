@@ -89,6 +89,58 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "PhotoView",new { photoID= photo.ID });
         }
 
+        [HttpGet]
+        public IActionResult Update(int photoID)
+        {
+            PhotoUpdateModel model = new PhotoUpdateModel();
+
+            Photo photo = PHrepository.Get(photoID);
+            var listAlbums = Arepository.GetAlbums();
+            model.AlbumNames = new List<string>();
+            foreach(Album A in listAlbums)
+            {
+                model.AlbumNames.Add(A.Name);
+            }
+            if (photo.AlbumID != null)
+            {
+                model.AlbumName = Arepository.Get(Convert.ToInt32(photo.AlbumID)).Name;
+            }
+            else
+            {
+                model.AlbumName = "";
+            }
+            model.CameraModel = photo.Model;
+            model.Comment = photo.CommentUser;
+            model.GPSlat = photo.GPSlat;
+            model.GPSlon = photo.GPSlon;
+            model.Name = photo.Name;
+            model.TimeMaking = photo.TimeMaking;
+            model.PhotoID = photoID;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Update(PhotoUpdateModel model)
+        {
+            Photo photo = PHrepository.Get(model.PhotoID);
+            if (model.AlbumName == "" || model.AlbumName == null)
+            {
+                photo.AlbumID = null;
+            }
+            else
+            {
+                photo.AlbumID = Arepository.FindName(model.AlbumName).First().ID;
+            }
+            photo.Name = model.Name;
+            if (model.TimeMaking.Year > 1977)
+                photo.TimeMaking = model.TimeMaking;
+            photo.Model = model.CameraModel;
+            photo.GPSlat = model.GPSlat;
+            photo.GPSlon = model.GPSlon;
+            photo.CommentUser = model.Comment;
+            PHrepository.Update(photo);
+            return RedirectToAction("Index", "PhotoView", new { photoID = photo.ID });
+        }
 
         public static string GenGuid(int k)
         {

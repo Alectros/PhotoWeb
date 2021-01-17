@@ -81,6 +81,45 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "AlbumPhotosList", new { Aname=album.Name });
         }
 
+        [HttpGet]
+        public IActionResult Update(int AlbumID)
+        {
+            AlbumUpdateModel model = new AlbumUpdateModel();
+            Album album = Arepository.Get(AlbumID);
+            model.Name = album.Name;
+            model.Description = album.Description;
+            ICollection<Photo> photoList = PHrepository.FindAlbumID(AlbumID);
+            model.Photos = new PhotoQueue[photoList.Count];
+
+            for(int i=0;i< photoList.Count;i++)
+            {
+                model.Photos[i] = new PhotoQueue();
+                model.Photos[i].PhotoID = photoList.Skip(i).First().ID;
+                model.Photos[i].AlbumQueue = photoList.Skip(i).First().AlbumQueue;
+                model.Photos[i].Name = photoList.Skip(i).First().Name;
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Update(AlbumUpdateModel model)
+        {
+            Album album = Arepository.FindName(model.Name).First();
+
+            album.Name = model.Name;
+            album.Description = model.Description;
+            Arepository.Update(album);
+
+            for (int i = 0; i < model.Photos.Count(); i++)
+            {
+                Photo photo = PHrepository.Get(model.Photos[i].PhotoID);
+                photo.AlbumQueue = model.Photos[i].AlbumQueue;
+                PHrepository.Update(photo);
+            }
+
+            return RedirectToAction("Index", "AlbumPhotosList", new { Aname = model.Name });
+        }
+
+
         public FileContentResult GetImage(int id)
         {
             byte[] image = PHrepository.Get(id).FilePhoto;

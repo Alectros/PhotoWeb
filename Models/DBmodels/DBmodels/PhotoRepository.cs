@@ -90,7 +90,7 @@ namespace PhotoWEB.Models
         {
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<int>("SELECT ID FROM Photos WHERE AlbumID = @albumid", new { albumid }).ToList();
+                return db.Query<int>("SELECT ID FROM Photos WHERE AlbumID = @albumid Order by AlbumQueue", new { albumid }).ToList();
             }
         }
         public List<Photo> FindAlbumID(int id)

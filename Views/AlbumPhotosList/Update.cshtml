@@ -1,0 +1,61 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.AlbumUpdateModel
+@{
+    ViewData["Title"] = "Photos";
+    Layout = null;
+}
+
+<head>
+    <title>Photo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+    <link href="~/css/PhotoView.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+    <h2>Update photo</h2>
+    <div class="container-fluid">
+        <form class="row" method="post">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6 photoQueue" name="Photos">
+                @for(int i=0;i<Model.Photos.Length;i++)
+                {
+                    <div class="container-fluid">
+                        <div class="row comment_area">
+                            <div class="col-lg-4">
+                                <img class="img_small_icon" src="@Url.Action("GetImage", "UserPage", new { id = Model.Photos[i].PhotoID })">
+                            </div>
+                            <div class="col-lg-4">
+                                <p>@Model.Photos[i].Name</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="hidden" name="Photos[@i].PhotoID" value="@Model.Photos[i].PhotoID" />
+                                <input type="hidden" name="Photos[@i].Name" value="@Model.Photos[i].Name" />
+                                <input type="text" name="Photos[@i].AlbumQueue" value="@Model.Photos[i].AlbumQueue" />
+                            </div>
+                        </div>
+                    </div>
+                 }
+                    </div>
+                    <div class="col-lg-5" method="post">
+                        <div>
+                            <p>
+                                <input type="text" name="Name" placeholder="Name" value="@Model.Name" />
+                            </p>
+                            <p>
+                                <textarea name="Description" style="resize: none;">@Model.Description</textarea>
+                            </p>
+                            <p>
+                                <input type="submit" class="btn btn-danger">
+                            </p>
+                        </div>
+
+                    </div>
+</form>
+    </div>
+
+</body>

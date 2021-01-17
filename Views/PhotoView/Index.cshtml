@@ -26,6 +26,7 @@
             <div class="col-lg-3">
                 <p class="button_area">
                     <button onclick="window.location.href = '@Url.Action("Delete",new { Model.PhotoID})';">Delete</button>
+                    <button onclick="window.location.href = '@Url.Action("Update",new { Model.PhotoID})';">Update</button>
                 </p>
                 @if (Model.GUID == null || Model.GUID == "")
                 {

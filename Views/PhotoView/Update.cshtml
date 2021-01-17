@@ -1,0 +1,80 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.PhotoUpdateModel
+@{
+    ViewData["Title"] = "Photos";
+    Layout = null;
+}
+
+<head>
+    <title>Photo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+    <link href="~/css/PhotoView.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+    <h2>Update photo</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6">
+                <img class="img_full" src="@Url.Action("GetImage", "UserPage", new { id = Model.PhotoID })">
+            </div>
+            <form class="col-lg-5" method="post">
+                <div>
+                    <p>
+                        <input type="text" name="Name" placeholder="Name" value="@Model.Name" />
+                    </p>
+                    <p>
+                        <input type="date" name="TimeMaking" placeholder="Creating data"  value="@Model.TimeMaking"/>
+                    </p>
+                    <p>
+                        <input type="text" name="CameraModel" placeholder="Camera model"  value="@Model.CameraModel"/>
+                    </p>
+                    <p>
+                        <input type="number" name="GPSlat" placeholder="GPS lat"  value="@Model.GPSlat"/>
+                    </p>
+                    <p>
+                        <input type="number" name="GPSlon" placeholder="GPS lon"  value="@Model.GPSlon"/>
+                    </p>
+                    <p>
+                        <textarea name="Comment" placeholder="Comment" style="resize: none;" >@Model.Comment</textarea>
+                    </p>
+                    <p>
+                        <select name="AlbumName">
+                            @if (Model.AlbumName == "")
+                            {
+                                <option value="" selected>No album</option>
+                            }
+                            else
+                            {
+                                <option value="">No album</option>
+                            }
+                            @foreach (string name in Model.AlbumNames)
+                            {
+                                if (name == Model.AlbumName)
+                                {
+                                    <option value="@name" selected>@name</option>
+                                }
+                                else
+                                {
+                                    <option value="@name">@name</option>
+                                }
+                            }
+
+                        </select>
+                    </p>
+                    <p>
+                        <input type="submit" class="btn btn-danger">
+                    </p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
