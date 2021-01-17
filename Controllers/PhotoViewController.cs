@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -22,6 +23,7 @@ namespace PhotoWEB.Controllers
             Arepository = new AlbumRepository(r);
             Crepository = new CommentRepository(r);
         }
+        [Authorize]
         public IActionResult Index(int photoID)
         {
             PhotoViewModel model = new PhotoViewModel();
@@ -51,6 +53,7 @@ namespace PhotoWEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult CommitComment(PhotoViewModel model)
         {
             var email = User.Identity.Name;
@@ -64,6 +67,7 @@ namespace PhotoWEB.Controllers
 
             return RedirectToAction("Index", "PhotoView", new { photoID = model.PhotoID });
         }
+        [Authorize]
         public IActionResult Delete(int photoID)
         {
             Photo photo = PHrepository.Get(photoID);
@@ -78,6 +82,7 @@ namespace PhotoWEB.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult SetGUID (int photoID)
         {
             Photo photo = PHrepository.Get(photoID);
@@ -89,6 +94,7 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "PhotoView",new { photoID= photo.ID });
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Update(int photoID)
         {
@@ -120,6 +126,7 @@ namespace PhotoWEB.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(PhotoUpdateModel model)
         {
             Photo photo = PHrepository.Get(model.PhotoID);
@@ -142,6 +149,7 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "PhotoView", new { photoID = photo.ID });
         }
 
+        [Authorize]
         public static string GenGuid(int k)
         {
             string guid = "";

@@ -7,6 +7,7 @@ using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -19,12 +20,15 @@ namespace PhotoWEB.Controllers
             Urepository = new UserRepository(r);
             Arepository = new AlbumRepository(r);
         }
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Index(AlbumCreateModel model)
         {
             Album album = new Album();

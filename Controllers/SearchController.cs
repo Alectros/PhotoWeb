@@ -9,6 +9,7 @@ using PhotoWEB.Models.DBmodels.ViewsModels;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using PhotoWEB.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace PhotoWEB.Controllers
@@ -24,7 +25,7 @@ namespace PhotoWEB.Controllers
             PHrepository = new PhotoRepository(r);
             Arepository = new AlbumRepository(r);
         }
-
+        [Authorize]
         private bool Roots()
         {
             var email = User.Identity.Name;
@@ -38,15 +39,15 @@ namespace PhotoWEB.Controllers
                 return true;
             }
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
             if (!Roots())
-                RedirectToAction("Index", "UserPage");
+                return RedirectToAction("Index", "UserPage");
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Index(string searchField,string type)
         {
@@ -68,10 +69,11 @@ namespace PhotoWEB.Controllers
             }
             return View();
         }
+        [Authorize]
         public IActionResult SUser(string search)
         {
             if (!Roots())
-                RedirectToAction("Index", "UserPage");
+                return RedirectToAction("Index", "UserPage");
 
             SearchUserModel model = new SearchUserModel();
             model.Users = new List<IdUClass>();
@@ -88,9 +90,12 @@ namespace PhotoWEB.Controllers
 
             return View(model);
         }
-
+        [Authorize]
         public IActionResult UserPage(int id)
         {
+            if (!Roots())
+                return RedirectToAction("Index", "UserPage");
+
             User user = Urepository.Get(id);
 
             UserPageModel model = new UserPageModel(user);
@@ -118,8 +123,12 @@ namespace PhotoWEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult PhotoList(int id)
         {
+            if (!Roots())
+                return RedirectToAction("Index", "UserPage");
+
             User user = Urepository.Get(id);
             PhotoListModel model = new PhotoListModel();
             model.PhotoID = PHrepository.FindUserPhotosID(user.ID);
@@ -131,7 +140,7 @@ namespace PhotoWEB.Controllers
         public IActionResult SAlbum(string search)
         {
             if (!Roots())
-                RedirectToAction("Index", "UserPage");
+                return RedirectToAction("Index", "UserPage");
 
             SearchAlbumModel model = new SearchAlbumModel();
             var albums = Arepository.FindName(search);
@@ -152,7 +161,7 @@ namespace PhotoWEB.Controllers
         public IActionResult SPhoto(string search)
         {
             if (!Roots())
-                RedirectToAction("Index", "UserPage");
+                return RedirectToAction("Index", "UserPage");
 
             SearchPhotoModel model = new SearchPhotoModel();
             var photos = PHrepository.FindName(search);

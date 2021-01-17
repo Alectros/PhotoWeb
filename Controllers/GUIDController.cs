@@ -9,6 +9,7 @@ using PhotoWEB.Models.DBmodels.ViewsModels;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using PhotoWEB.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {

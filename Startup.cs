@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.CookiePolicy;
 using PhotoWEB.Models.DBmodels;
 using Dapper;
 
@@ -61,7 +62,14 @@ namespace PhotoWEB
                 app.UseHsts();
             }
             app.UseAuthentication();
-                                       
+
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
+
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {

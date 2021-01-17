@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -21,6 +22,7 @@ namespace PhotoWEB.Controllers
             Arepository = new AlbumRepository(r);
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var email = User.Identity.Name;
@@ -49,12 +51,6 @@ namespace PhotoWEB.Controllers
                 count++;
             }
             return View(model);
-        }
-
-        public FileContentResult GetImage(int id)
-        {
-            byte[] image = PHrepository.Get(id).FilePhoto;
-            return File(image, "image/jpeg");
-        }
+        }        
     }
 }

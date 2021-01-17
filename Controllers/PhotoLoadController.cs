@@ -7,6 +7,7 @@ using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -22,6 +23,7 @@ namespace PhotoWEB.Controllers
             Arepository = new AlbumRepository(r);
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             PhotoLoadModel model = new PhotoLoadModel();
@@ -34,6 +36,7 @@ namespace PhotoWEB.Controllers
             }
             return View(model);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Index(PhotoLoadModel model)
         {
@@ -82,20 +85,6 @@ namespace PhotoWEB.Controllers
                 PHrepository.Create(photo);
             }
             return RedirectToAction("Index");
-        }
-        public List<string> GetAlbumsNames()
-        {
-            var albums = Arepository.GetAlbums();
-
-            List<string> list = new List<string>();
-            int count = 0;
-            foreach(Album A in albums)
-            {
-                list.Insert(count,A.Name);
-                count++;
-            }
-
-            return list;
         }
     }
 }

@@ -7,6 +7,7 @@ using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -21,6 +22,7 @@ namespace PhotoWEB.Controllers
             Urepository = new UserRepository(r);
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var email = User.Identity.Name;

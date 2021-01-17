@@ -26,9 +26,7 @@ namespace PhotoWEB.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<User> list = Urepository.GetUsers();
-            LoginModel model = new LoginModel();
-            return View(model);
+            return View();
         }
         private async Task Authenticate(string email)
         {

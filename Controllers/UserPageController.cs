@@ -58,7 +58,6 @@ namespace PhotoWEB.Controllers
 
             return View(model);
         }
-
         public FileContentResult GetImage(int id)
         {
             byte[] image = PHrepository.Get(id).FilePhoto;

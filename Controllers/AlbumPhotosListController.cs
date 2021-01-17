@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotoWEB.Controllers
 {
@@ -22,6 +23,8 @@ namespace PhotoWEB.Controllers
             Arepository = new AlbumRepository(r);
             Crepository = new CommentRepository(r);
         }
+
+        [Authorize]
         public IActionResult Index(string Aname)
         {
             Album album = Arepository.FindName(Aname).First();
@@ -33,6 +36,7 @@ namespace PhotoWEB.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize]
         public IActionResult Delete(int AlbumID)
         {
             AlbumDeleteModel model= new AlbumDeleteModel();
@@ -40,6 +44,7 @@ namespace PhotoWEB.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(AlbumDeleteModel model)
         {
             if (model.DeletePhotos=="Yes")
@@ -70,6 +75,7 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index","AlbumList");
         }
 
+        [Authorize]
         public IActionResult SetGUID(int albumID)
         {
             Album album = Arepository.Get(albumID);
@@ -82,6 +88,7 @@ namespace PhotoWEB.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Update(int AlbumID)
         {
             AlbumUpdateModel model = new AlbumUpdateModel();
@@ -101,6 +108,7 @@ namespace PhotoWEB.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Update(AlbumUpdateModel model)
         {
             Album album = Arepository.FindName(model.Name).First();
@@ -119,11 +127,6 @@ namespace PhotoWEB.Controllers
             return RedirectToAction("Index", "AlbumPhotosList", new { Aname = model.Name });
         }
 
-
-        public FileContentResult GetImage(int id)
-        {
-            byte[] image = PHrepository.Get(id).FilePhoto;
-            return File(image, "image/jpeg");
-        }
+        
     }
 }
