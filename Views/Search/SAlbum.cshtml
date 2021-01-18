@@ -1,0 +1,37 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchAlbumModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<head>
+    <title>User Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                @foreach (var A in Model.albums)
+                {
+                    <p>
+                        <a href="@Url.Action("Index","AlbumPhotosList",new { Aname=A.Name })">
+                            @A.Name        @A.User                       
+                        </a>
+                    </p>
+                }
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>

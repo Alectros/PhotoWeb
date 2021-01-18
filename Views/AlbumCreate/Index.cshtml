@@ -1,0 +1,47 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.AlbumCreateModel
+
+@{
+    ViewData["Title"] = "Create Album";
+    Layout = "_Layout";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <title>Create Album</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LoginStyle.css" />
+
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <form class="row" enctype="multipart/form-data" method="post">
+            <div class="col-lg-5">
+
+            </div>
+            <div class="col-lg-2">
+                <h2>Create Album</h2>
+                <p>
+                    <input type="text" name="Name" placeholder="Name" />
+                </p>
+                <p>
+                    <textarea name="Description" style="resize: none;" placeholder="Description"></textarea>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-danger">
+                </p>
+            </div>
+            <div class="col-lg-5">
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

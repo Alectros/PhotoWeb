@@ -1,0 +1,137 @@
+﻿@model PhotoWEB.Models.ViewsModels.UserPageModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<html>
+<head>
+    <title>userpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div id="mainframe" class="col-lg-10">
+                <p>
+                    <h2>
+                        @Model.FirstName @Model.SecondName @Model.ThirdName
+                    </h2>
+                </p>
+                <div class="row">
+                    <p>
+                        <div class="col-lg-1">
+
+                        </div>
+                        <div class="col-lg-10 h4">
+                            @Model.Description
+                        </div>
+                        <div class="col-lg-1">
+
+                        </div>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div id="photos" class="col-lg-10">
+                        <a href="@Url.Action("PhotoList", new { id=Model.ID})">
+                            <table>
+                                <tr>
+                                    @if (Model.OpenImages.Count() > 0)
+                                    {
+                                        @foreach (int n in Model.OpenImages.Take(4))
+                                        {
+                                            <td>
+                                                <div class="img_div">
+                                                    <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                                </div>
+                                            </td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="img_div">
+                                                <img class="img_icon" src="~/images/empty.jpg">
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            </table>
+                        </a>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div id="albums" class="col-lg-10">
+                        <a href="@Url.Action("Index","AlbumList")">
+                            <table>
+                                <tr>
+                                    @if (Model.OpenAlbumsAVAS.Count > 0)
+                                    {
+                                        @foreach (int n in Model.OpenAlbumsAVAS)
+                                        {
+                                            if (n != -1)
+                                            {
+                                                <td>
+                                                    <div class="img_div">
+                                                        <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = n })">
+                                                    </div>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <div class="img_div">
+                                                        <img class="img_icon" src="~/images/empty.jpg">
+                                                    </div>
+                                                </td>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="img_div">
+                                                <img class="img_icon" src="~/images/empty.jpg">
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    @if (Model.OpenAlbumsNames.Count > 0)
+                                    {
+                                        @foreach (string n in Model.OpenAlbumsNames)
+                                        {
+                                            <td>
+                                                @n
+                                            </td>
+                                        }
+                                    }
+
+                                </tr>
+                            </table>
+                        </a>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

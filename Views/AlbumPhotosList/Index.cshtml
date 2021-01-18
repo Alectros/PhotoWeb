@@ -1,0 +1,67 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.AlbumPhotosListModel;
+@{
+    ViewData["Title"] = "Photos";
+    Layout = "_Layout";
+}
+
+<head>
+    <title>Album Photos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
+                <h2>Photo List</h2>
+                <table>
+
+                    @for (int i = 0; i < Model.PhotoID.Count(); i++)
+                    {
+                        <tr>
+                            @foreach (int iD in Model.PhotoID.Skip(i * 3).Take(3))
+                            {
+                            <td>
+                                <div class="img_div">
+                                    <a href="@Url.Action("Index","PhotoView",new { photoID=iD })">
+                                        <img class="img_icon" src="@Url.Action("GetImage", "UserPage", new { id = iD })">
+                                    </a>
+                                </div>
+                            </td>
+                            }
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            <div class="col-lg-3">
+                <p class="button_area">
+                    <button onclick="window.location.href = '@Url.Action("Delete",new { Model.AlbumID})';">Delete</button>
+                    <button onclick="window.location.href = '@Url.Action("Update",new { Model.AlbumID})';">Update</button>
+                </p>
+                @if (Model.GUID == null || Model.GUID == "")
+                {
+                    <p class="button_area">
+                        <button onclick="window.location.href = '@Url.Action("SetGUID", new { Model.AlbumID })';">Share</button>
+                    </p>
+                }
+                else
+                {
+                    <p class="button_area">
+                        <input type="text" readonly="readonly" style="width: 400px" value="@Context.Request.Host/GUID/SAlbum?Guid=@Model.GUID" />
+                    </p>
+                }
+                <h2>Description</h2>
+                <p id="description">@Model.Description</p>
+            </div>
+        </div>
+    </div>
+
+</body>

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<head>
+    <title>GUID</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <form class="col-lg-10" method="post">
+                <h2>Search</h2>
+                <p>
+                    <input type="text" name="searchField"/>
+                </p>
+                <p>
+                    <select name="type">
+                        <option value="User" selected>User</option>
+                        <option value="Photo">Photo</option>
+                        <option value="Album">Album</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" />
+                </p>
+            </form>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>

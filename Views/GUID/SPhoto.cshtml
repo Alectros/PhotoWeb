@@ -1,0 +1,67 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.GUIDPhotoModel
+@{
+    ViewData["Title"] = "Photos";
+    Layout = null;
+}
+
+<head>
+    <title>Photo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+    <link href="~/css/PhotoView.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
+                <img class="img_full" src="@Url.Action("GetImage", "UserPage", new { id = Model.PhotoID })">
+            </div>
+            <div class="col-lg-3">
+                <div class="comment_box">
+
+                    @foreach (var t in Model.Comments)
+                    {
+
+                        <div class="comment_area">
+                            <p>
+                                <h4>
+                                    <strong>
+                                        @t.name
+                                    </strong>
+                                </h4>
+                            </p>
+                            <p>
+                                @t.Comment
+                            </p>
+                        </div>
+                    }
+                </div>
+
+                <div>
+                    <h4><p>Write a comment</p></h4>
+                    <form method="post" action="CommitComment">
+                        <input type="hidden" name="PhotoID" value="@Model.PhotoID" />
+                        <p>
+                            <input type="hidden" name="GUID" value="@Model.GUID" />
+                        </p>
+                        <p>
+                            <textarea type="text" name="user_comment" style="resize: none;"> </textarea>
+                        </p>
+                        <p>
+                            <input type="submit" value="Load"/>
+                        </p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>

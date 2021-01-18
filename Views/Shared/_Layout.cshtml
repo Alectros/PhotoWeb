@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="@Url.Action("Index","Search")">PhotoWeb</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Index","UserPage")">Home page</a></li>
+                <li><a href="@Url.Action("Index","PhotoLoad")">Add Photo</a></li>
+                <li><a href="@Url.Action("Index","AlbumCreate")">Add Album</a></li>
+                <li><a href="@Url.Action("Index","GUID")">GUID</a></li>
+                <li><a href="@Url.Action("Logout","Home")">Log out</a></li>
+            </ul>
+        </div>
+
+    </nav>
+    @RenderBody()
+</body>
+</html>

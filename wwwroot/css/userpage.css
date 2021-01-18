@@ -1,0 +1,64 @@
+#mainframe{
+    margin-left: 2em;
+}
+#description{
+    background-color: #ffeeff;
+    height: 120px;
+    width: 500px;
+}
+#photos{
+    margin-top: 20px;
+    background-color: #f0eeff;
+    height: 200px;
+    width: 750px;
+}
+#albums{
+    margin-top: 20px;
+    background-color: #f0ffff;
+    height: 200px;
+    width: 750px;
+}
+.img_icon {
+    max-height: 200px;
+    max-width: 300px;
+}
+.img_small_icon{
+    max-height: 100px;
+    max-width: 100px;
+}
+.img_div {
+    margin-top: 25px;
+    height: 200px;
+    width: 300px;
+}
+.album_icon{
+    margin-top: 25px;
+    max-height: 200px;
+    max-width: 300px;
+}
+.button_area{
+    height: 25px;
+    width: auto;
+    background-color:aquamarine;
+}
+.comment_area{
+    height: auto;
+    max-width: 300px;
+    background-color: sandybrown;
+}
+.comment_box{
+    height: 550px;
+    width: auto;
+    background-color: lemonchiffon;
+    margin-top: 5px;
+    border: solid;
+    overflow: auto;
+}
+.photoQueue{
+    height:750px;
+    overflow:auto;
+    background-color: burlywood;
+}
+body{
+    padding-top:0px;
+}

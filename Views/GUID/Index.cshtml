@@ -1,0 +1,38 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.GUIDIndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<head>
+    <title>GUID</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <form class="col-lg-10" method="post">
+                <h2>Enter GUID</h2>
+                <p>
+                    <input name="Guid" type="text" />
+                </p>
+                <p>
+                    <select name="GuidType" type="radio" value="Photo"> 
+                        <option value="Photo">Photo</option>
+                        <option value="Album">Album</option>
+                    </select>
+                </p>
+                <input type="submit">
+            </form>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>

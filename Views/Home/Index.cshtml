@@ -1,0 +1,49 @@
+﻿@model PhotoWEB.Models.ViewsModels.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LoginStyle.css" />
+
+    <link href="~/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid" >
+        <form class="row" style="margin-top: 45vh" method="post">
+            <div class="col-lg-5">
+            </div>
+            <div class="col-lg-2">
+                <h2>Login</h2>
+                <p>
+                    <input type="email" name="Email" placeholder="Email">
+                </p>
+                <p>
+                    <input type="password" name="Password" placeholder="Password">
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-danger">
+                </p>
+                <p>
+                    @Html.ActionLink("Sign in", "Index", "Register")
+                </p>
+            </div>
+            <div class="col-lg-5">
+                <ul class="errors">
+                    <li>
+                        <span asp-validation-for="Email"></span>
+                    </li>
+                    <li>
+                        <span asp-validation-for="Password"></span>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</body>

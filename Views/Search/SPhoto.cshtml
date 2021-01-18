@@ -1,0 +1,37 @@
+﻿@model PhotoWEB.Models.DBmodels.ViewsModels.SearchPhotoModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<head>
+    <title>Photo Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" charset="utf-8">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="/css/userpage.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                @foreach (var P in Model.photos)
+                {
+                    <p>
+                        <a href="@Url.Action("Index","PhotoView",new {photoID=P.ID })">
+                            <img class="img_small_icon" src="@Url.Action("GetImage", "UserPage", new { id = P.ID })">
+                            @P.Name      @P.User
+                        </a>
+                    </p>
+                }
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+
+</body>
