@@ -6,7 +6,9 @@ using Dapper;
 using System.Data;
 using System.Data.SqlClient;
 using PhotoWEB.Models.DBmodels;
+using PhotoWEB.Models.DBmodels.DBmodels;
 using System.Security.Cryptography;
+using PhotoWEB.Util.Cryptograthy;
 
 namespace PhotoWEB.Models
 {
@@ -15,7 +17,6 @@ namespace PhotoWEB.Models
         void Create(User user);
         void Delete(int id);
         User Get(int id);
-        List<User> FindFio(string Fname, string Sname, string Tname);
         User FindEmail(string email);
         List<User> GetUsers();
         void Update(User user);
@@ -30,9 +31,14 @@ namespace PhotoWEB.Models
         }
         public void Create(User user)
         {
+            AesWeb userAES = new AesWeb();
+            user.CrKey = userAES.Key();
+            user.CrIV = userAES.IV();
+            CryptedUser crypted = new CryptedUser(user);
+
             using (IDbConnection db = connectionFactory.Create()) 
             {
-                var sqlQuery = "INSERT INTO Users (Email,Password,Salt,FirstName,SecondName,ThirdName,BirthDate,Description,Role)" +
+                var sqlQuery = "INSERT INTO Users (Email,Password,Salt,FirstName,SecondName,ThirdName,BirthDate,Description,Role,CrKey,CrIV)" +
                                " VALUES(@Email," +
                                        "@Password," +
                                        "@salt," +
@@ -41,8 +47,10 @@ namespace PhotoWEB.Models
                                        "@ThirdName," +
                                        "@BirthDate," +
                                        "@Description," +
-                                       "@Role)";
-                db.Execute(sqlQuery, user);
+                                       "@Role," +
+                                       "@CrKey," +
+                                       "@CrIV)";
+                db.Execute(sqlQuery, crypted);
             }
         }
         public void Delete(int id)
@@ -56,37 +64,58 @@ namespace PhotoWEB.Models
 
         public User Get(int id)
         {
+            CryptedUser crypted = new CryptedUser();
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<User>("SELECT * FROM Users WHERE Id = @id", new { id }).FirstOrDefault();
+                crypted =  db.Query<CryptedUser>("SELECT * FROM Users WHERE Id = @id", new { id }).FirstOrDefault();
             }
-        }
 
-        public List<User> FindFio(string FirstName, string SecondName, string ThirdName)
-        {
-            using (IDbConnection db = connectionFactory.Create())
-            {
-                return db.Query<User>("SELECT * FROM Users WHERE FirstName = @FirstName OR SecondName = @SecondName OR ThirdName = @ThirdName", new { FirstName, SecondName, ThirdName }).ToList();
-            }
+            User user = new User(crypted);
+
+            return user;
         }
         public User FindEmail(string email)
         {
+            CryptedUser crypted = new CryptedUser();
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<User>("SELECT * FROM Users WHERE Email = @email", new { email }).FirstOrDefault();
+                crypted = db.Query<CryptedUser>("SELECT * FROM Users WHERE Email = @email", new { email }).FirstOrDefault();
             }
+            User user;
+
+            if (crypted != null)
+            {
+                user = new User(crypted);
+            }
+            else
+            {
+                user = null;
+            }
+
+            return user;
         }
 
         public List<User> GetUsers()
         {
+            List<CryptedUser> crypted = new List<CryptedUser>();
             using (IDbConnection db = connectionFactory.Create())
             {
-                return db.Query<User>("SELECT * FROM Users").ToList();
+                crypted = db.Query<CryptedUser>("SELECT * FROM Users").ToList();
             }
+
+            List<User> users = new List<User>();
+
+            foreach(CryptedUser cryptedUser in crypted)
+            {
+                users.Add(new User(cryptedUser));
+            }
+
+            return users;
         }
 
         public void Update(User user)
         {
+            CryptedUser cryptedUser = new CryptedUser(user);
             using (IDbConnection db = connectionFactory.Create())
             {
                 var sqlQuery = "UPDATE Users SET" + " Email=@Email," +
@@ -95,9 +124,11 @@ namespace PhotoWEB.Models
                                                     "ThirdName=@ThirdName," +
                                                     "BirthDate=@BirthDate," +
                                                     "Description=@Description," +
-                                                    "Role=@Role" +
+                                                    "Role=@Role," +
+                                                    "@CrKey," +
+                                                    "@CrIV" +
                                                     " WHERE Id = @Id";
-                db.Execute(sqlQuery, user);
+                db.Execute(sqlQuery, cryptedUser);
             }
         }
 

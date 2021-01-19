@@ -78,15 +78,12 @@ namespace PhotoWEB.Controllers
             SearchUserModel model = new SearchUserModel();
             model.Users = new List<IdUClass>();
 
-            var users = Urepository.FindFio(search,"","");
-
-            foreach(User U in users)
-            {
+            var user = Urepository.FindEmail(search);
+            
                 IdUClass t = new IdUClass();
-                t.ID = U.ID;
-                t.name = U.FirstName + ' ' + U.SecondName + ' ' + U.ThirdName;
+                t.ID = user.ID;
+                t.name = user.FirstName + ' ' + user.SecondName + ' ' + user.ThirdName;
                 model.Users.Add(t);
-            }
 
             return View(model);
         }

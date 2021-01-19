@@ -36,6 +36,7 @@
     <PackageReference Include="MySql.Data.Entity" Version="6.10.9" />
     <PackageReference Include="MySqlConnector" Version="1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Simple.AES" Version="2.0.2" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
   </ItemGroup>
 
