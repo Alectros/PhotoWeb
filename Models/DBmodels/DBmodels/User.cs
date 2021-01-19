@@ -45,6 +45,7 @@ namespace PhotoWEB.Models
 
         public User(CryptedUser user)
         {
+            this.ID = user.ID;
             this.Email = user.Email;
             this.Password = user.Password;
             this.salt = user.salt;
