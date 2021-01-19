@@ -8,6 +8,8 @@ using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using log4net;
+using PhotoWEB.Models.DBmodels.DBmodels;
 
 namespace PhotoWEB.Controllers
 {
@@ -15,10 +17,14 @@ namespace PhotoWEB.Controllers
     {
         IUserRepository Urepository;
         IAlbumRepository Arepository;
-        public AlbumCreateController(IUserRepository _Urepository, IAlbumRepository _Arepository)
+        LogFactory logFactory;
+        private ILog log;
+        public AlbumCreateController(IUserRepository _Urepository, IAlbumRepository _Arepository, LogFactory _logFactory)
         {
             Urepository = _Urepository;
             Arepository = _Arepository;
+            logFactory = _logFactory;
+            log = logFactory.GetLogger();
         }
 
         [Authorize]
@@ -38,6 +44,7 @@ namespace PhotoWEB.Controllers
             User user = Urepository.FindEmail(email);
             album.UserID = user.ID;
             Arepository.Create(album);
+            log.Info("User " + user.Email + " created album "+ album.ID);
             return View();
         }
     }

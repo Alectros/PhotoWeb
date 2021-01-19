@@ -7,6 +7,8 @@ using PhotoWEB.Models;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using Microsoft.AspNetCore.Authorization;
+using log4net;
+using PhotoWEB.Models.DBmodels.DBmodels;
 
 namespace PhotoWEB.Controllers
 {
@@ -16,12 +18,16 @@ namespace PhotoWEB.Controllers
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
         ICommentRepository Crepository;
-        public PhotoViewController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository, ICommentRepository _Crepository)
+        LogFactory logFactory;
+        private ILog log;
+        public PhotoViewController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository, ICommentRepository _Crepository, LogFactory _logFactory)
         {
             Urepository = _Urepository;
             PHrepository = _PHrepository;
             Arepository = _Arepository;
             Crepository = _Crepository;
+            logFactory = _logFactory;
+            log = logFactory.GetLogger();
         }
         [Authorize]
         public IActionResult Index(int photoID)
@@ -65,6 +71,8 @@ namespace PhotoWEB.Controllers
             comment.Text = model.user_comment;
             Crepository.Create(comment);
 
+            log.Info("User " + user.Email + " commented photo " + comment.PhotoID);
+
             return RedirectToAction("Index", "PhotoView", new { photoID = model.PhotoID });
         }
         [Authorize]
@@ -72,6 +80,7 @@ namespace PhotoWEB.Controllers
         {
             Photo photo = PHrepository.Get(photoID);
             PHrepository.Delete(photo.ID);
+            log.Info("Deleted photo " + photo.ID);
             if (photo.AlbumID != null)
             {
                 return RedirectToAction("Index", "AlbumPhotosList", new { Arepository.Get(Convert.ToInt32(photo.AlbumID)).Name });

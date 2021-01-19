@@ -15,6 +15,7 @@ CREATE TABLE Photos
 	GUID NVARCHAR(100)
 )
 
+
 CREATE TABLE Albums
 (
 	ID INT PRIMARY KEY IDENTITY(1,1),
@@ -23,6 +24,7 @@ CREATE TABLE Albums
 	Description NVARCHAR(3000),
 	GUID NVARCHAR(100)
 )
+
 
 CREATE TABLE Users
 (
@@ -48,8 +50,18 @@ CREATE TABLE Comments
 	Text NVARCHAR(3000) NOT NULL
 )
 
-ALTER TABLE Albums ADD CONSTRAINT AlbumsUserID FOREIGN KEY (UserID) REFERENCES Users(ID); 
 ALTER TABLE Comments ADD CONSTRAINT CommUserID FOREIGN KEY (UserID) REFERENCES Users(ID); 
 ALTER TABLE Comments ADD CONSTRAINT CommPhotoID FOREIGN KEY  (PhotoID)  REFERENCES Photos(ID); 
+ALTER TABLE Albums ADD CONSTRAINT AlbumsUserID FOREIGN KEY (UserID) REFERENCES Users(ID); 
 ALTER TABLE Photos ADD CONSTRAINT PhotosAlbumIS FOREIGN KEY (AlbumID) REFERENCES Albums(ID); 
 ALTER TABLE Photos ADD CONSTRAINT PhotosUserIDFK FOREIGN KEY (UserID) REFERENCES Users(ID); 
+
+CREATE TABLE [dbo].[Log] (
+    [Id] [int] IDENTITY (1, 1) NOT NULL,
+    [Date] [datetime] NOT NULL,
+    [Thread] [varchar] (255) NOT NULL,
+    [Level] [varchar] (50) NOT NULL,
+    [Logger] [varchar] (255) NOT NULL,
+    [Message] [varchar] (4000) NOT NULL,
+    [Exception] [varchar] (2000) NULL
+)

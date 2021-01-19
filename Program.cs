@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Autofac.Extensions.DependencyInjection;
+using log4net.Appender;
 
 namespace PhotoWEB
 {

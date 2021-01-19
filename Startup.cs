@@ -22,6 +22,7 @@ using Autofac.Extensions.DependencyInjection;
 using PhotoWEB.Models.ViewsModels;
 using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models;
+using PhotoWEB.Models.DBmodels.DBmodels;
 using PhotoWEB.Controllers;
 using System.ComponentModel;
 using System.IO;
@@ -67,6 +68,7 @@ namespace PhotoWEB
             builder.RegisterType<PhotoRepository>().As<IPhotoRepository>();
             builder.RegisterType<CommentRepository>().As<ICommentRepository>();
             builder.RegisterType<AlbumRepository>().As<IAlbumRepository>();
+            builder.RegisterType<LogFactory>();
             builder.RegisterType<MsSQLConnectionFactory>().As<IConnectionFactory>();
 
 

@@ -8,6 +8,8 @@ using PhotoWEB.Models.DBmodels.ViewsModels;
 using PhotoWEB.Models.DBmodels;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using log4net;
+using PhotoWEB.Models.DBmodels.DBmodels;
 
 namespace PhotoWEB.Controllers
 {
@@ -16,11 +18,15 @@ namespace PhotoWEB.Controllers
         IUserRepository Urepository;
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
-        public PhotoLoadController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository)
+        LogFactory logFactory;
+        private ILog log;
+        public PhotoLoadController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository, LogFactory _logFactory)
         {
             PHrepository = _PHrepository;
             Urepository = _Urepository;
             Arepository = _Arepository;
+            logFactory = _logFactory;
+            log = logFactory.GetLogger();
         }
 
         [Authorize]
@@ -82,6 +88,7 @@ namespace PhotoWEB.Controllers
                 else
                     photo.TimeMaking = photo.TimeLoad;
 
+                log.Info("User " + user.Email + " load photo" + photo.ID);
                 PHrepository.Create(photo);
             }
             return RedirectToAction("Index");

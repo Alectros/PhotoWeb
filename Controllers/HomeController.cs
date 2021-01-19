@@ -9,20 +9,28 @@ using MySql.Data.MySqlClient;
 using BCrypt.Net;
 using BCrypt;
 using PhotoWEB.Models.ViewsModels;
+using PhotoWEB.Models.DBmodels.DBmodels;
 using PhotoWEB.Models.DBmodels;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using log4net;
+using log4net.Appender;
+using log4net.Config;
 
 namespace PhotoWEB.Controllers
 {
     public class HomeController : Controller
     {
         IUserRepository Urepository;
-        public HomeController(IUserRepository _Urepository)
+        LogFactory logFactory;
+        private ILog log;
+        public HomeController(IUserRepository _Urepository, LogFactory _logFactory)
         {
             Urepository = _Urepository;
+            logFactory = _logFactory;
+            log = logFactory.GetLogger();
         }
         public IActionResult Index()
         {
@@ -50,6 +58,7 @@ namespace PhotoWEB.Controllers
                     if (BCrypt.Net.BCrypt.HashPassword(model.Password,user.salt)==user.Password.Replace(" ",string.Empty))
                     {
                         await Authenticate(model.Email);
+                        log.Info("User " + user.Email + " log in");
                         return RedirectToAction("Index", "UserPage");
                     }
                     else
@@ -71,6 +80,7 @@ namespace PhotoWEB.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            log.Info("Enter log out");
             return RedirectToAction("Index", "Home");
         }
 
