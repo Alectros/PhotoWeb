@@ -81,7 +81,7 @@ namespace PhotoWEB.Controllers
             Album album = Arepository.Get(albumID);
             if (album.GUID == null)
             {
-                album.GUID = PhotoViewController.GenGuid(album.ID);
+                album.GUID = Guid.NewGuid().ToString();
                 Arepository.Update(album);
             }
             return RedirectToAction("Index", "AlbumPhotosList", new { Aname=album.Name });

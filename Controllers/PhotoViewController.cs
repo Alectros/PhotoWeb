@@ -88,7 +88,7 @@ namespace PhotoWEB.Controllers
             Photo photo = PHrepository.Get(photoID);
             if (photo.GUID == null)
             {
-                photo.GUID = GenGuid(photo.ID);
+                photo.GUID = Guid.NewGuid().ToString();
                 PHrepository.Update(photo);
             }
             return RedirectToAction("Index", "PhotoView",new { photoID= photo.ID });
@@ -147,19 +147,6 @@ namespace PhotoWEB.Controllers
             photo.CommentUser = model.Comment;
             PHrepository.Update(photo);
             return RedirectToAction("Index", "PhotoView", new { photoID = photo.ID });
-        }
-
-        [Authorize]
-        public static string GenGuid(int k)
-        {
-            string guid = "";
-            char[] alf = new char[10] { 'c', 'a', '2', '3', 'b', '5', '6', 'd', '8', '9' }; 
-            for (int i = 0; i < 25; i++)
-            {
-                guid += alf[k % 10];
-                k /= 10;
-            }
-            return guid;
         }
     }
 }

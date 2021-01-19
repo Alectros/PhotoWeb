@@ -17,14 +17,12 @@ namespace PhotoWEB
         
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
+            WebHost.CreateDefaultBuilder()
                 .ConfigureServices(services => services.AddAutofac())
-                .UseIISIntegration()
-                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
-                .Build();
-            host.Run();
+                .Build()
+                .Run()
+                ;
         }
         
         
