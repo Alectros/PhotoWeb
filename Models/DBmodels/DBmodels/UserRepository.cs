@@ -6,6 +6,7 @@ using Dapper;
 using System.Data;
 using System.Data.SqlClient;
 using PhotoWEB.Models.DBmodels;
+using System.Security.Cryptography;
 
 namespace PhotoWEB.Models
 {

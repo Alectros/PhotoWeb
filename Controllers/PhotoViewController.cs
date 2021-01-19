@@ -16,12 +16,12 @@ namespace PhotoWEB.Controllers
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
         ICommentRepository Crepository;
-        public PhotoViewController(IConnectionFactory r)
+        public PhotoViewController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository, ICommentRepository _Crepository)
         {
-            Urepository = new UserRepository(r);
-            PHrepository = new PhotoRepository(r);
-            Arepository = new AlbumRepository(r);
-            Crepository = new CommentRepository(r);
+            Urepository = _Urepository;
+            PHrepository = _PHrepository;
+            Arepository = _Arepository;
+            Crepository = _Crepository;
         }
         [Authorize]
         public IActionResult Index(int photoID)

@@ -20,9 +20,9 @@ namespace PhotoWEB.Controllers
     public class HomeController : Controller
     {
         IUserRepository Urepository;
-        public HomeController(IConnectionFactory r)
+        public HomeController(IUserRepository _Urepository)
         {
-            Urepository = new UserRepository(r);
+            Urepository = _Urepository;
         }
         public IActionResult Index()
         {

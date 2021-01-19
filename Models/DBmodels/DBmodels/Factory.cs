@@ -12,11 +12,11 @@ namespace PhotoWEB.Models.DBmodels
     {
         IDbConnection Create();
     }
-    public class MySQLConnectionFactory:IConnectionFactory
+    public class MsSQLConnectionFactory:IConnectionFactory
     {
         private readonly string connectionstring;
 
-        public MySQLConnectionFactory(string _connectionstring)
+        public MsSQLConnectionFactory(string _connectionstring)
         {
             this.connectionstring = _connectionstring;
         }

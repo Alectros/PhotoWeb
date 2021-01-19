@@ -19,12 +19,12 @@ namespace PhotoWEB.Controllers
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
         ICommentRepository Crepository;
-        public GUIDController(IConnectionFactory r)
+        public GUIDController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository, ICommentRepository _Crepository)
         {
-            Urepository = new UserRepository(r);
-            PHrepository = new PhotoRepository(r);
-            Arepository = new AlbumRepository(r);
-            Crepository = new CommentRepository(r);
+            Urepository = _Urepository;
+            PHrepository = _PHrepository;
+            Arepository = _Arepository;
+            Crepository = _Crepository;
         }
         public IActionResult Index()
         {

@@ -15,10 +15,10 @@ namespace PhotoWEB.Controllers
     {
         IUserRepository Urepository;
         IAlbumRepository Arepository;
-        public AlbumCreateController(IConnectionFactory r)
+        public AlbumCreateController(IUserRepository _Urepository, IAlbumRepository _Arepository)
         {
-            Urepository = new UserRepository(r);
-            Arepository = new AlbumRepository(r);
+            Urepository = _Urepository;
+            Arepository = _Arepository;
         }
 
         [Authorize]

@@ -12,9 +12,9 @@ namespace PhotoWEB.Controllers
     public class RegisterController : Controller
     {
         IUserRepository Urepository;
-        public RegisterController(IConnectionFactory r)
+        public RegisterController(IUserRepository _Urepository)
         {
-            Urepository = new UserRepository(r);
+            Urepository = _Urepository;
         }
         public IActionResult Index()
         {

@@ -16,11 +16,11 @@ namespace PhotoWEB.Controllers
         IUserRepository Urepository;
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
-        public PhotoLoadController(IConnectionFactory r)
+        public PhotoLoadController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository)
         {
-            PHrepository = new PhotoRepository(r);
-            Urepository = new UserRepository(r);
-            Arepository = new AlbumRepository(r);
+            PHrepository = _PHrepository;
+            Urepository = _Urepository;
+            Arepository = _Arepository;
         }
 
         [Authorize]

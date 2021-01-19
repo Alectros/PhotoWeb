@@ -19,11 +19,11 @@ namespace PhotoWEB.Controllers
         IUserRepository Urepository;
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
-        public SearchController(IConnectionFactory r)
+        public SearchController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository)
         {
-            Urepository = new UserRepository(r);
-            PHrepository = new PhotoRepository(r);
-            Arepository = new AlbumRepository(r);
+            Urepository = _Urepository;
+            PHrepository = _PHrepository;
+            Arepository = _Arepository;
         }
         [Authorize]
         private bool Roots()

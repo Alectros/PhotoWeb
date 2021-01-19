@@ -22,11 +22,11 @@ namespace PhotoWEB.Controllers
         IUserRepository Urepository;
         IPhotoRepository PHrepository;
         IAlbumRepository Arepository;
-        public UserPageController(IConnectionFactory r)
+        public UserPageController(IUserRepository _Urepository, IPhotoRepository _PHrepository, IAlbumRepository _Arepository)
         {
-            Urepository = new UserRepository(r);
-            PHrepository = new PhotoRepository(r);
-            Arepository = new AlbumRepository(r);
+            Urepository = _Urepository;
+            PHrepository = _PHrepository;
+            Arepository = _Arepository;
         }
         [Authorize]
         public IActionResult Index()
